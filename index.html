@@ -6,6 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form action="" 
+    name="add-task" 
+    onsubmit="return validateForm()" 
+    method="post">
+        <label for="task-name">Task name : </label>
+        <input type="text" name="task-name" id="task-name">
+        <input type="submit" value="Add">
+    </form>
+    <script src="main.js"></script>
 </body>
 </html>
