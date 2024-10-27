@@ -5,13 +5,23 @@ function addTask() {
     let taskInputDate = document.getElementById("date-task");
     let taskDate = taskInputDate.value;
     
+    /* 
+    TODO:
+        if (taskText === "" || taskDate === ""){
+        alert("Please enter name task or date task !");
+        return;
+
+        1. Add this code into a function 
+        2. BUG: taskText accepts spaces " ", so it needs to use trim() method
+    };    
+    */
     if (taskText === "" || taskDate === ""){
         alert("Please enter name task or date task !");
         return;
     };
 
     let taskList = document.getElementById("task-list");
-
+ 
     let li = document.createElement("li");
     li.id = "task";
     taskDate = taskDate.split("-").reverse().join("-");
