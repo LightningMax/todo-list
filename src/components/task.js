@@ -1,4 +1,4 @@
-function addTask() {
+export function addTask() {
     let taskInputText = document.getElementById("name-task");
     let taskText = taskInputText.value;
 
@@ -48,20 +48,18 @@ function addTask() {
     taskInputDate.value = "";
 };
 
-function deleteTask(finishList, li) {
-            
+
+export const deleteTask = (finishList, li) => {
     finishList.removeChild(li);
+}
 
-};
-
-function finishTask(taskList, finishList, li) {
+export function finishTask(taskList, finishList, li) {
     finishList.appendChild(li);
     taskList.removeChild(li);
 
 };
 
-function returnTask(taskList, finishList, li) {
+export function returnTask(taskList, finishList, li) {
     taskList.appendChild(li);
     finishList.removeChild(li);
 }
-
