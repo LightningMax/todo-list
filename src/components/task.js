@@ -1,16 +1,19 @@
+export const isFieldValid = (field) => {
+  if (field.trim() === "") {
+    alert("You need to fill in the field");
+    return true;
+  }
+  return false;
+};
+
 export function addTask() {
-    let taskInputText = document.getElementById("name-task");
-    let taskText = taskInputText.value;
+  let taskInputText = document.getElementById("name-task");
+  let taskText = taskInputText.value;
 
-    let taskInputDate = document.getElementById("date-task");
-    let taskDate = taskInputDate.value;
-    
-    if (taskText === "" || taskDate === ""){
-        alert("Please enter name task or date task !");
-        return;
-    };
+  let taskInputDate = document.getElementById("date-task");
+  let taskDate = taskInputDate.value;
 
-    let taskList = document.getElementById("task-list");
+  let taskList = document.getElementById("task-list");
 
   let li = document.createElement("li");
   li.id = "task";
@@ -47,18 +50,16 @@ export function addTask() {
   taskInputDate.value = "";
 }
 
-
 export const deleteTask = (finishList, li) => {
-    finishList.removeChild(li);
-}
-
-export function finishTask(taskList, finishList, li) {
-    finishList.appendChild(li);
-    taskList.removeChild(li);
-
+  finishList.removeChild(li);
 };
 
+export function finishTask(taskList, finishList, li) {
+  finishList.appendChild(li);
+  taskList.removeChild(li);
+}
+
 export function returnTask(taskList, finishList, li) {
-    taskList.appendChild(li);
-    finishList.removeChild(li);
+  taskList.appendChild(li);
+  finishList.removeChild(li);
 }
