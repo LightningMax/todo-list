@@ -1,3 +1,11 @@
-import { addTask } from "./components/task.js";
+import {
+  addTask,
+  createStructureTask,
+  deleteChild,
+  taskStatus,
+} from "./components/task.js";
 
-document.getElementById("add-task-button").addEventListener("click", addTask);
+document.getElementById("addTaskButton").addEventListener("click", addTask);
+document.getElementById("removeTask").addEventListener("click", deleteChild);
+document.getElementById("checkbox").addEventListener("click", taskStatus);
+//call createStructureTask() when the list create is call
