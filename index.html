@@ -1,28 +1,41 @@
 <!DOCTYPE html>
-<html lang="fr">
-
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do List</title>
-    <link rel="stylesheet" href="./styles/styles.css" />
+    <!-- <link rel="stylesheet" href="./styles/styles.css" /> -->
   </head>
   <body>
     <div id="list-container">
-        <button id="add-new-list">Add</button>
-        <dialog id="add-list-modal">
-          <form method="dialog">
-            <label for="new-list">New list</label>
-            <input type="text" name="new-list" , id="new-list" />
-            <button id="add-list-btn">Add</button>
-          </form>
-        </dialog>
-  
-        <ul id="menu-list">
-  
-        </ul>
-      </div>
-      
+      <button id="add-new-list">Add</button>
+      <dialog id="add-list-modal">
+        <form method="dialog">
+          <label for="new-list">New list</label>
+          <input type="text" name="new-list" , id="new-list" />
+          <button id="add-list-btn">Add</button>
+        </form>
+      </dialog>
+
+      <ul id="menu-list">
+
+      </ul>
+    </div>
+
+    <div class="container">
+      <h1>To-Do List</h1>
+      <input type="text" id="name-task" placeholder="Add a new task" />
+      <input type="date" id="date-task" />
+      <button id="add-task-button">Add Task</button>
+
+      <ul id="task-list"></ul>
+
+      <fieldset>
+        <legend>Task finish:</legend>
+        <ul id="finish-task"></ul>
+      </fieldset>
+    </div>
+
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
