@@ -4,7 +4,7 @@ const addListModal = () => {
 };
 
 const createList = () => {
-  const listContainer = document.getElementById("menu-list");
+  const menuList = document.getElementById("menu-list");
   const input = document.getElementById("new-list");
   const li = document.createElement("li");
   const div = document.createElement("div");
@@ -13,7 +13,7 @@ const createList = () => {
   btn.textContent = input.value || "new list";
   div.appendChild(btn);
   li.appendChild(div);
-  listContainer.appendChild(li);
+  menuList.appendChild(li);
 
   input.value = ""
 };
