@@ -1,4 +1,3 @@
-// Checks if the input field is empty. If it is, shows an alert message and returns true; otherwise, returns false.
 export const isFieldValid = (field, message) => {
   if (field.trim() === "") {
     alert(message);
@@ -7,15 +6,12 @@ export const isFieldValid = (field, message) => {
   return false;
 };
 
-// Creates the HTML structure for the task list, including inputs for task name and date, an "Add Task" button,
-// and sections for tasks and finished tasks.
-// createStructureTask() must be run in a list created to have this structure in each list.
 export const createStructureTask = () => {
   const div = document.createElement("div");
   div.id = "containerTask";
 
-  const titleList = document.getElementById("nameList"); // Check if the id is the right one for the lists
-  titleList.textContent = "";
+  // const titleList = document.getElementById("nameList"); // Check if the id is the right one for the lists
+  // titleList.textContent = "";
 
   const inputText = document.createElement("input");
   inputText.type = "text";
@@ -41,7 +37,6 @@ export const createStructureTask = () => {
   const finishListTask = document.createElement("ul");
   finishListTask.id = "finishTaskList";
 
-  div.appendChild(titleList);
   div.appendChild(inputText);
   div.appendChild(inputDate);
   div.appendChild(btnAddTask);
@@ -49,6 +44,7 @@ export const createStructureTask = () => {
   div.appendChild(fieldset);
   fieldset.appendChild(legend);
   fieldset.appendChild(finishListTask);
+  document.body.appendChild(div);
 
   const deleteButton = document.createElement("button");
   deleteButton.id = "removeTask";
@@ -59,37 +55,34 @@ export const createStructureTask = () => {
   checkBox.type = "checkbox";
 };
 
-//add new task with name and date enter (this function use isFieldValid())
 export const addTask = () => {
-  const taskText = document.getElementById("nameTask").value; //get data name task
-  const taskDate = document.getElementById("dateTask").value; //get data date task
+  const taskText = document.getElementById("nameTask").value;
+  const taskDate = document.getElementById("dateTask").value;
 
   if (isFieldValid(taskText, "You need to fill in the field") === true) {
-    //verify if data name task is not empty, if empty stop addTask()
     return;
   }
 
   const taskList = document.getElementById("taskList");
 
-  const li = document.createElement("li"); //create new task  with data name task and data date task
+  const li = document.createElement("li");
   li.id = "task";
   taskDate = taskDate.split("-").reverse().join("-");
   li.textContent = taskText + "   " + taskDate;
 
-  li.appendChild(document.getElementById("removeTask")); //add the delete button to the task
+  li.appendChild(document.getElementById("removeTask"));
 
   const checkBox = document.getElementById("checkbox");
 
   const finishList = document.getElementById("finishTaskList");
 
-  li.appendChild(checkBox); //add the checkbox to the task
-  taskList.appendChild(li); //add the task to the task list
+  li.appendChild(checkBox);
+  taskList.appendChild(li);
 
-  taskInputText.value = ""; //reset data name task
-  taskInputDate.value = ""; //reset data date task
+  taskInputText.value = "";
+  taskInputDate.value = "";
 };
 
-// get parents and child and delete the child
 export const deleteChild = (parentNode, targetTask) => {
   parentNode.removeChild(targetTask);
 };
