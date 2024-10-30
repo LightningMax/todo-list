@@ -1,38 +1,27 @@
-const addListModal = (btn) => {
-  const addListModal = document.getElementById("add-list-modal");
-
-  btn.addEventListener("click", () => {
-    addListModal.showModal();
-  });
+const addListModal = () => {
+  const listModal = document.getElementById("list-modal");
+  listModal.showModal();
 };
 
 const createList = () => {
-  const addListBtn = document.getElementById("add-list-btn");
+  const listContainer = document.getElementById("menu-list");
+  const input = document.getElementById("new-list");
+  const li = document.createElement("li");
+  const div = document.createElement("div");
+  const btn = document.createElement("button");
 
-  addListBtn.onclick = () => {
-    const listContainer = document.getElementById("menu-list");
-    const inpt = document.getElementById("new-list")
-    const li = document.createElement("li");
-    const div = document.createElement("div");
-    const btn = document.createElement("button");
+  btn.textContent = input.value || "new list";
+  div.appendChild(btn);
+  li.appendChild(div);
+  listContainer.appendChild(li);
 
-    btn.textContent = inpt.value || "new list";
-    div.appendChild(btn);
-    li.appendChild(div);
-    listContainer.appendChild(li);
-  };
+  input.value = ""
 };
 
-/*
-  - BUG:
-      When the button Add is clicked, it don't shows the modal
-      immediately, and when the modal is showed, you need to
-      click two times to add a new list.
-*/
 export const addList = () => {
-  const addNewListBtn = document.getElementById("add-new-list");
-  const addList = document.getElementById("add-list-btn");
+  const addListButton = document.getElementById("add-list-button");
+  const confirmAddList = document.getElementById("confirm-add-list");
 
-  addNewListBtn.onclick = () => addListModal(addNewListBtn);
-  addList.onclick = createList;
+  addListButton.onclick = addListModal;
+  confirmAddList.onclick = createList;
 };
