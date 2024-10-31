@@ -6,12 +6,12 @@ export const isFieldValid = (field, message) => {
   return false;
 };
 
-export const createStructureTask = () => {
+export const createStructureTask = (listId, listTitle) => {
   const div = document.createElement("div");
-  div.id = "containerTask";
+  div.id = `${listId}-content`;
 
-  // const titleList = document.getElementById("nameList"); // Check if the id is the right one for the lists
-  // titleList.textContent = "";
+  const titleList = document.createElement("h2")
+  titleList.textContent = listTitle;
 
   const inputText = document.createElement("input");
   inputText.type = "text";
@@ -37,6 +37,7 @@ export const createStructureTask = () => {
   const finishListTask = document.createElement("ul");
   finishListTask.id = "finishTaskList";
 
+  div.append(titleList)
   div.appendChild(inputText);
   div.appendChild(inputDate);
   div.appendChild(btnAddTask);
