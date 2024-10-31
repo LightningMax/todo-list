@@ -1,3 +1,5 @@
+import { createStructureTask } from "./task.js";
+
 const addListModal = () => {
   const listModal = document.getElementById("list-modal");
   listModal.showModal();
@@ -7,15 +9,16 @@ const createList = () => {
   const menuList = document.getElementById("menu-list");
   const input = document.getElementById("new-list");
   const li = document.createElement("li");
-  const div = document.createElement("div");
   const btn = document.createElement("button");
 
   btn.textContent = input.value || "new list";
-  div.appendChild(btn);
-  li.appendChild(div);
+  btn.id = "list-button";
+  li.appendChild(btn);
   menuList.appendChild(li);
 
-  input.value = ""
+  input.value = "";
+
+  createStructureTask()
 };
 
 export const addList = () => {
@@ -25,3 +28,7 @@ export const addList = () => {
   addListButton.onclick = addListModal;
   confirmAddList.onclick = createList;
 };
+
+export const createDefautTodo = () => {
+  createList()
+}
