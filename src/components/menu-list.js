@@ -1,38 +1,47 @@
-const addListModal = (btn) => {
-  const addListModal = document.getElementById("add-list-modal");
+import { createStructureTask } from "./task.js";
 
-  btn.addEventListener("click", () => {
-    addListModal.showModal();
-  });
+const addListModal = () => {
+  const listModal = document.getElementById("list-modal");
+  listModal.showModal();
 };
 
 const createList = () => {
-  const addListBtn = document.getElementById("add-list-btn");
+  const menuList = document.getElementById("menu-list");
+  const input = document.getElementById("new-list");
+  
+  const countLists = document.querySelectorAll(".list").length
+  const li = document.createElement("li");
+  li.className = "list"  
+  const listId = li.id = `list-${countLists+1}`
+  
+  const btn = document.createElement("button");
+  btn.classList = "list-button"
+  const btnCount = document.querySelectorAll(".list-button").length
+  const listTitle = btn.textContent = input.value || "New list";
+  btn.id = `list-button-${btnCount+1}`;
+  
+  li.appendChild(btn);
+  menuList.appendChild(li);
 
-  addListBtn.onclick = () => {
-    const listContainer = document.getElementById("menu-list");
-    const inpt = document.getElementById("new-list")
-    const li = document.createElement("li");
-    const div = document.createElement("div");
-    const btn = document.createElement("button");
+  input.value = "";
 
-    btn.textContent = inpt.value || "new list";
-    div.appendChild(btn);
-    li.appendChild(div);
-    listContainer.appendChild(li);
-  };
+  createStructureTask(listId, listTitle)
 };
 
-/*
-  - BUG:
-      When the button Add is clicked, it don't shows the modal
-      immediately, and when the modal is showed, you need to
-      click two times to add a new list.
-*/
 export const addList = () => {
-  const addNewListBtn = document.getElementById("add-new-list");
-  const addList = document.getElementById("add-list-btn");
+  const addListButton = document.getElementById("add-list-button");
+  const confirmAddList = document.getElementById("confirm-add-list");
 
-  addNewListBtn.onclick = () => addListModal(addNewListBtn);
-  addList.onclick = createList;
+  addListButton.onclick = addListModal;
+  confirmAddList.onclick = createList;
 };
+
+export const createDefautTodo = () => {
+  createList()
+}
+
+const hideList = () => {
+  lists = document.querySelectorAll(".list")
+
+  
+}
