@@ -1,4 +1,4 @@
-// Checks if the input field is empty. If it is, shows an alert message and returns true; otherwise, returns false.
+// Vérifie si le champ est vide, et affiche un message d’alerte si nécessaire
 export const isFieldValid = (field, message) => {
   if (field.trim() === "") {
     alert(message);
@@ -7,15 +7,13 @@ export const isFieldValid = (field, message) => {
   return false;
 };
 
-// Creates the HTML structure for the task list, including inputs for task name and date, an "Add Task" button,
-// and sections for tasks and finished tasks.
-// createStructureTask() must be run in a list created to have this structure in each list.
-export const createStructureTask = () => {
+// Crée une liste de tâches avec les éléments nécessaires
+export const createTodoList = (listId, listTitle) => {
   const div = document.createElement("div");
-  div.id = "containerTask";
+  div.id = `${listId}-content`;
 
-  const titleList = document.getElementById("nameList"); // Check if the id is the right one for the lists
-  titleList.textContent = "";
+  const titleList = document.createElement("h2");
+  titleList.textContent = listTitle;
 
   const inputText = document.createElement("input");
   inputText.type = "text";
@@ -23,12 +21,13 @@ export const createStructureTask = () => {
   inputText.placeholder = "Add a new task";
 
   const inputDate = document.createElement("input");
-  inputText.type = "date";
-  inputText.id = "dateTask";
+  inputDate.type = "date";
+  inputDate.id = "dateTask";
 
   const btnAddTask = document.createElement("button");
   btnAddTask.id = "addTaskButton";
   btnAddTask.textContent = "Add Task";
+  btnAddTask.onclick = addTask;
 
   const listTask = document.createElement("ul");
   listTask.id = "taskList";
@@ -41,73 +40,62 @@ export const createStructureTask = () => {
   const finishListTask = document.createElement("ul");
   finishListTask.id = "finishTaskList";
 
-  div.appendChild(titleList);
-  div.appendChild(inputText);
-  div.appendChild(inputDate);
-  div.appendChild(btnAddTask);
+  div.append(titleList, inputText, inputDate, btnAddTask, listTask, fieldset);
+  fieldset.append(legend, finishListTask);
+  document.body.appendChild(div);
+};
 
-  div.appendChild(fieldset);
-  fieldset.appendChild(legend);
-  fieldset.appendChild(finishListTask);
+export const addTask = () => {
+  const taskInputText = document.getElementById("nameTask");
+  const taskInputDate = document.getElementById("dateTask");
+  if (isFieldValid(taskInputText.value, "You need to fill in the field")) {
+    return;
+  }
+  const newTask = createTask(taskInputText.value, taskInputDate.value);
+  const taskList = document.getElementById("taskList");
+  taskList.appendChild(newTask);
+  taskInputText.value = "";
+  taskInputDate.value = "";
+};
+
+
+const createTask = (taskText, taskDate) => {
+  const countTask = document.querySelectorAll(".task").length;
+  const li = document.createElement("li");
+  li.className = "task";
+  li.id = `task-${countTask + 1}`;
+  li.textContent = `${taskText}   ${taskDate.split("-").reverse().join("/")}`;
 
   const deleteButton = document.createElement("button");
-  deleteButton.id = "removeTask";
+  deleteButton.id = `delete-${li.id}`;
   deleteButton.textContent = "Delete";
   deleteButton.style.display = "none";
+  deleteButton.onclick = () => deleteChild(document.getElementById("finishTaskList"), li);
 
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
+  checkBox.onchange = () => taskStatus(li, deleteButton, checkBox);
+
+  li.append(checkBox, deleteButton);
+
+  return li;
 };
 
-//add new task with name and date enter (this function use isFieldValid())
-export const addTask = () => {
-  const taskText = document.getElementById("nameTask").value; //get data name task
-  const taskDate = document.getElementById("dateTask").value; //get data date task
-
-  if (isFieldValid(taskText, "You need to fill in the field") === true) {
-    //verify if data name task is not empty, if empty stop addTask()
-    return;
-  }
-
-  const taskList = document.getElementById("taskList");
-
-  const li = document.createElement("li"); //create new task  with data name task and data date task
-  li.id = "task";
-  taskDate = taskDate.split("-").reverse().join("-");
-  li.textContent = taskText + "   " + taskDate;
-
-  li.appendChild(document.getElementById("removeTask")); //add the delete button to the task
-
-  const checkBox = document.getElementById("checkbox");
-
-  const finishList = document.getElementById("finishTaskList");
-
-  li.appendChild(checkBox); //add the checkbox to the task
-  taskList.appendChild(li); //add the task to the task list
-
-  taskInputText.value = ""; //reset data name task
-  taskInputDate.value = ""; //reset data date task
-};
-
-// get parents and child and delete the child
+// Fonction pour supprimer une tâche spécifique
 export const deleteChild = (parentNode, targetTask) => {
   parentNode.removeChild(targetTask);
 };
 
-//moves the task to the correct list depending on whether its checkbox is checked
-export const taskStatus = () => {
-  const taskList = document.getElementById("listTask");
+// Gère le statut des tâches entre listes
+const taskStatus = (li, deleteButton, checkBox) => {
+  const taskList = document.getElementById("taskList");
   const finishList = document.getElementById("finishTaskList");
-  const li = document.getElementById("task");
-  const deleteButton = document.getElementById("removeTask");
 
   if (checkBox.checked) {
     deleteButton.style.display = "inline";
     finishList.appendChild(li);
-    taskList.removeChild(li);
   } else {
-    deleteButton.style.display = "none";
+    deleteButton.style.display = "none"; 
     taskList.appendChild(li);
-    finishList.removeChild(li);
   }
 };
