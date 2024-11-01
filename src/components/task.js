@@ -1,4 +1,8 @@
-// Vérifie si le champ est vide, et affiche un message d’alerte si nécessaire
+/*
+  BUG:
+    This function should return false if the field
+    is not valid, otherwise return true
+*/
 export const isFieldValid = (field, message) => {
   if (field.trim() === "") {
     alert(message);
@@ -7,7 +11,14 @@ export const isFieldValid = (field, message) => {
   return false;
 };
 
-// Crée une liste de tâches avec les éléments nécessaires
+/* 
+  Refact:
+    - Each element in the todo list should have a class
+    instead of a unique id
+    - each id/class should be written in kebab-case instead
+    of camelCase
+      Ex: dateTask id shoud be called task-date and should be a classList
+*/
 export const createTodoList = (listId, listTitle) => {
   const div = document.createElement("div");
   div.id = `${listId}-content`;
@@ -17,7 +28,7 @@ export const createTodoList = (listId, listTitle) => {
 
   const inputText = document.createElement("input");
   inputText.type = "text";
-  inputText.id = "nameTask";
+  inputText.classList = "task-name";
   inputText.placeholder = "Add a new task";
 
   const inputDate = document.createElement("input");
@@ -27,7 +38,7 @@ export const createTodoList = (listId, listTitle) => {
   const btnAddTask = document.createElement("button");
   btnAddTask.id = "addTaskButton";
   btnAddTask.textContent = "Add Task";
-  btnAddTask.onclick = addTask;
+  btnAddTask.onclick = () => addTask(div.id);
 
   const listTask = document.createElement("ul");
   listTask.id = "taskList";
@@ -37,6 +48,7 @@ export const createTodoList = (listId, listTitle) => {
   const legend = document.createElement("legend");
   legend.textContent = "Task Finished";
 
+  // Refact: change finishListTask to finishedTasks
   const finishListTask = document.createElement("ul");
   finishListTask.id = "finishTaskList";
 
@@ -44,20 +56,6 @@ export const createTodoList = (listId, listTitle) => {
   fieldset.append(legend, finishListTask);
   document.body.appendChild(div);
 };
-
-export const addTask = () => {
-  const taskInputText = document.getElementById("nameTask");
-  const taskInputDate = document.getElementById("dateTask");
-  if (isFieldValid(taskInputText.value, "You need to fill in the field")) {
-    return;
-  }
-  const newTask = createTask(taskInputText.value, taskInputDate.value);
-  const taskList = document.getElementById("taskList");
-  taskList.appendChild(newTask);
-  taskInputText.value = "";
-  taskInputDate.value = "";
-};
-
 
 const createTask = (taskText, taskDate) => {
   const countTask = document.querySelectorAll(".task").length;
@@ -70,7 +68,8 @@ const createTask = (taskText, taskDate) => {
   deleteButton.id = `delete-${li.id}`;
   deleteButton.textContent = "Delete";
   deleteButton.style.display = "none";
-  deleteButton.onclick = () => deleteChild(document.getElementById("finishTaskList"), li);
+  deleteButton.onclick = () =>
+    deleteChild(document.getElementById("finishTaskList"), li);
 
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
@@ -81,12 +80,14 @@ const createTask = (taskText, taskDate) => {
   return li;
 };
 
-// Fonction pour supprimer une tâche spécifique
 export const deleteChild = (parentNode, targetTask) => {
   parentNode.removeChild(targetTask);
 };
 
-// Gère le statut des tâches entre listes
+/* 
+  BUG:
+    - taskStatus will append a new task to the first list
+*/
 const taskStatus = (li, deleteButton, checkBox) => {
   const taskList = document.getElementById("taskList");
   const finishList = document.getElementById("finishTaskList");
@@ -95,7 +96,22 @@ const taskStatus = (li, deleteButton, checkBox) => {
     deleteButton.style.display = "inline";
     finishList.appendChild(li);
   } else {
-    deleteButton.style.display = "none"; 
+    deleteButton.style.display = "none";
     taskList.appendChild(li);
   }
+};
+
+export const addTask = (listContentId) => {
+  const taskInputText = document.querySelector(`#${listContentId} .task-name`);
+  const taskInputDate = document.getElementById("dateTask");
+
+  if (isFieldValid(taskInputText.value, "You need to fill in the field")) {
+    return;
+  }
+  // Refact: This block of code should be inside isFieldValid
+  const newTask = createTask(taskInputText.value, taskInputDate.value);
+  const taskList = document.querySelector(`#${listContentId} #taskList`);
+  taskList.appendChild(newTask);
+  taskInputText.value = "";
+  taskInputDate.value = "";
 };
