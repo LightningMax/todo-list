@@ -1,26 +1,14 @@
-/*
-  BUG:
-    This function should return false if the field
-    is not valid, otherwise return true
-*/
 export const isFieldValid = (field, message) => {
   if (field.trim() === "") {
     alert(message);
-    return true;
+    return false;
   }
-  return false;
+  return true;
 };
 
-/* 
-  Refact:
-    - Each element in the todo list should have a class
-    instead of a unique id
-    - each id/class should be written in kebab-case instead
-    of camelCase
-      Ex: dateTask id shoud be called task-date and should be a classList
-*/
 export const createTodoList = (listId, listTitle) => {
   const div = document.createElement("div");
+  div.classList.add("todo-container");
   div.id = `${listId}-content`;
 
   const titleList = document.createElement("h2");
@@ -28,52 +16,50 @@ export const createTodoList = (listId, listTitle) => {
 
   const inputText = document.createElement("input");
   inputText.type = "text";
-  inputText.classList = "task-name";
+  inputText.classList.add("task-name");
   inputText.placeholder = "Add a new task";
 
   const inputDate = document.createElement("input");
   inputDate.type = "date";
-  inputDate.id = "dateTask";
+  inputDate.classList.add("task-date");
 
   const btnAddTask = document.createElement("button");
-  btnAddTask.id = "addTaskButton";
+  btnAddTask.classList.add("add-task-button");
   btnAddTask.textContent = "Add Task";
   btnAddTask.onclick = () => addTask(div.id);
 
   const listTask = document.createElement("ul");
-  listTask.id = "taskList";
+  listTask.classList.add("task-list");
 
   const fieldset = document.createElement("fieldset");
-
   const legend = document.createElement("legend");
   legend.textContent = "Task Finished";
 
-  // Refact: change finishListTask to finishedTasks
-  const finishListTask = document.createElement("ul");
-  finishListTask.id = "finishTaskList";
+  const finishedTasks = document.createElement("ul");
+  finishedTasks.classList.add("finished-tasks");
 
   div.append(titleList, inputText, inputDate, btnAddTask, listTask, fieldset);
-  fieldset.append(legend, finishListTask);
+  fieldset.append(legend, finishedTasks);
   document.body.appendChild(div);
 };
 
-const createTask = (taskText, taskDate) => {
-  const countTask = document.querySelectorAll(".task").length;
+const createTask = (taskText, taskDate, listContentId) => {
+  const countTask = document.querySelectorAll(`#${listContentId} .task`).length;
   const li = document.createElement("li");
   li.className = "task";
   li.id = `task-${countTask + 1}`;
-  li.textContent = `${taskText}   ${taskDate.split("-").reverse().join("/")}`;
+  li.textContent = `${taskText} ${taskDate.split("-").reverse().join("/")}`;
 
   const deleteButton = document.createElement("button");
-  deleteButton.id = `delete-${li.id}`;
+  deleteButton.classList.add("delete-task");
   deleteButton.textContent = "Delete";
   deleteButton.style.display = "none";
   deleteButton.onclick = () =>
-    deleteChild(document.getElementById("finishTaskList"), li);
+    deleteChild(document.querySelector(`#${listContentId} .finished-tasks`), li);
 
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
-  checkBox.onchange = () => taskStatus(li, deleteButton, checkBox);
+  checkBox.onchange = () => taskStatus(li, deleteButton, checkBox, listContentId);
 
   li.append(checkBox, deleteButton);
 
@@ -84,13 +70,9 @@ export const deleteChild = (parentNode, targetTask) => {
   parentNode.removeChild(targetTask);
 };
 
-/* 
-  BUG:
-    - taskStatus will append a new task to the first list
-*/
-const taskStatus = (li, deleteButton, checkBox) => {
-  const taskList = document.getElementById("taskList");
-  const finishList = document.getElementById("finishTaskList");
+const taskStatus = (li, deleteButton, checkBox, listContentId) => {
+  const taskList = document.querySelector(`#${listContentId} .task-list`);
+  const finishList = document.querySelector(`#${listContentId} .finished-tasks`);
 
   if (checkBox.checked) {
     deleteButton.style.display = "inline";
@@ -103,15 +85,16 @@ const taskStatus = (li, deleteButton, checkBox) => {
 
 export const addTask = (listContentId) => {
   const taskInputText = document.querySelector(`#${listContentId} .task-name`);
-  const taskInputDate = document.getElementById("dateTask");
+  const taskInputDate = document.querySelector(`#${listContentId} .task-date`);
 
-  if (isFieldValid(taskInputText.value, "You need to fill in the field")) {
+  if (!isFieldValid(taskInputText.value, "You need to fill in the field") || !isFieldValid(taskInputDate.value, "You need to pick a date")) {
     return;
   }
-  // Refact: This block of code should be inside isFieldValid
-  const newTask = createTask(taskInputText.value, taskInputDate.value);
-  const taskList = document.querySelector(`#${listContentId} #taskList`);
+
+  const newTask = createTask(taskInputText.value, taskInputDate.value, listContentId);
+  const taskList = document.querySelector(`#${listContentId} .task-list`);
   taskList.appendChild(newTask);
+
   taskInputText.value = "";
   taskInputDate.value = "";
 };
