@@ -87,14 +87,12 @@ export const addTask = (listContentId) => {
   const taskInputText = document.querySelector(`#${listContentId} .task-name`);
   const taskInputDate = document.querySelector(`#${listContentId} .task-date`);
 
-  if (!isFieldValid(taskInputText.value, "You need to fill in the field") || !isFieldValid(taskInputDate.value, "You need to pick a date")) {
-    return;
+  if (isFieldValid(taskInputText.value, "You need to fill in the field") && isFieldValid(taskInputDate.value, "You need to pick a date")) {
+    const newTask = createTask(taskInputText.value, taskInputDate.value, listContentId);
+    const taskList = document.querySelector(`#${listContentId} .task-list`);
+    taskList.appendChild(newTask);
+
+    taskInputText.value = "";
+    taskInputDate.value = "";
   }
-
-  const newTask = createTask(taskInputText.value, taskInputDate.value, listContentId);
-  const taskList = document.querySelector(`#${listContentId} .task-list`);
-  taskList.appendChild(newTask);
-
-  taskInputText.value = "";
-  taskInputDate.value = "";
 };
