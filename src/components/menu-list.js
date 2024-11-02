@@ -1,4 +1,4 @@
-import { createStructureTask } from "./task.js";
+import { createTodoList } from "./task.js";
 
 const addListModal = () => {
   const listModal = document.getElementById("list-modal");
@@ -25,7 +25,7 @@ const createList = () => {
 
   input.value = "";
 
-  createStructureTask(listId, listTitle)
+  createTodoList(listId, listTitle)
 };
 
 export const addList = () => {
