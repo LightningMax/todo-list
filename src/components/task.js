@@ -1,4 +1,3 @@
-// Vérifie si le champ est vide, et affiche un message d’alerte si nécessaire
 export const isFieldValid = (field, message) => {
   if (field.trim() === "") {
     alert(message);
@@ -49,7 +48,7 @@ const createTask = (taskText, taskDate, listContentId) => {
   const li = document.createElement("li");
   li.className = "task";
   li.id = `task-${countTask + 1}`;
-  li.textContent = `${taskText} ${taskDate.split("-").reverse().join("/")}`;
+  const infoTask = `${taskText} ${taskDate.split("-").reverse().join("/")}`;
 
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-task");
@@ -60,41 +59,18 @@ const createTask = (taskText, taskDate, listContentId) => {
       document.querySelector(`#${listContentId} .finished-tasks`),
       li
     );
-
+  
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
+  
   checkBox.onchange = () =>
     taskStatus(li, deleteButton, checkBox, listContentId);
 
-  li.append(checkBox, deleteButton);
+  li.append(checkBox, infoTask, deleteButton);
 
   return li;
 };
 
-
-const createTask = (taskText, taskDate) => {
-  const countTask = document.querySelectorAll(".task").length;
-  const li = document.createElement("li");
-  li.className = "task";
-  li.id = `task-${countTask + 1}`;
-  li.textContent = `${taskText}   ${taskDate.split("-").reverse().join("/")}`;
-
-  const deleteButton = document.createElement("button");
-  deleteButton.id = `delete-${li.id}`;
-  deleteButton.textContent = "Delete";
-  deleteButton.style.display = "none";
-  deleteButton.onclick = () => deleteChild(document.getElementById("finishTaskList"), li);
-
-  const checkBox = document.createElement("input");
-  checkBox.type = "checkbox";
-  checkBox.onchange = () => taskStatus(li, deleteButton, checkBox);
-
-  li.append(checkBox, deleteButton);
-
-  return li;
-};
-
-// Fonction pour supprimer une tâche spécifique
 export const deleteChild = (parentNode, targetTask) => {
   parentNode.removeChild(targetTask);
 };
@@ -109,7 +85,7 @@ const taskStatus = (li, deleteButton, checkBox, listContentId) => {
     deleteButton.style.display = "inline";
     finishList.appendChild(li);
   } else {
-    deleteButton.style.display = "none"; 
+    deleteButton.style.display = "none";
     taskList.appendChild(li);
   }
 };
