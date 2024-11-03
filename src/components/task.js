@@ -2,14 +2,14 @@
 export const isFieldValid = (field, message) => {
   if (field.trim() === "") {
     alert(message);
-    return true;
+    return false;
   }
-  return false;
+  return true;
 };
 
-// Crée une liste de tâches avec les éléments nécessaires
 export const createTodoList = (listId, listTitle) => {
   const div = document.createElement("div");
+  div.classList.add("todo-container");
   div.id = `${listId}-content`;
 
   const titleList = document.createElement("h2");
@@ -17,45 +17,58 @@ export const createTodoList = (listId, listTitle) => {
 
   const inputText = document.createElement("input");
   inputText.type = "text";
-  inputText.id = "nameTask";
+  inputText.classList.add("task-name");
   inputText.placeholder = "Add a new task";
 
   const inputDate = document.createElement("input");
   inputDate.type = "date";
-  inputDate.id = "dateTask";
+  inputDate.classList.add("task-date");
 
   const btnAddTask = document.createElement("button");
-  btnAddTask.id = "addTaskButton";
+  btnAddTask.classList.add("add-task-button");
   btnAddTask.textContent = "Add Task";
-  btnAddTask.onclick = addTask;
+  btnAddTask.onclick = () => addTask(div.id);
 
   const listTask = document.createElement("ul");
-  listTask.id = "taskList";
+  listTask.classList.add("task-list");
 
   const fieldset = document.createElement("fieldset");
-
   const legend = document.createElement("legend");
   legend.textContent = "Task Finished";
 
-  const finishListTask = document.createElement("ul");
-  finishListTask.id = "finishTaskList";
+  const finishedTasks = document.createElement("ul");
+  finishedTasks.classList.add("finished-tasks");
 
   div.append(titleList, inputText, inputDate, btnAddTask, listTask, fieldset);
-  fieldset.append(legend, finishListTask);
+  fieldset.append(legend, finishedTasks);
   document.body.appendChild(div);
 };
 
-export const addTask = () => {
-  const taskInputText = document.getElementById("nameTask");
-  const taskInputDate = document.getElementById("dateTask");
-  if (isFieldValid(taskInputText.value, "You need to fill in the field")) {
-    return;
-  }
-  const newTask = createTask(taskInputText.value, taskInputDate.value);
-  const taskList = document.getElementById("taskList");
-  taskList.appendChild(newTask);
-  taskInputText.value = "";
-  taskInputDate.value = "";
+const createTask = (taskText, taskDate, listContentId) => {
+  const countTask = document.querySelectorAll(`#${listContentId} .task`).length;
+  const li = document.createElement("li");
+  li.className = "task";
+  li.id = `task-${countTask + 1}`;
+  li.textContent = `${taskText} ${taskDate.split("-").reverse().join("/")}`;
+
+  const deleteButton = document.createElement("button");
+  deleteButton.classList.add("delete-task");
+  deleteButton.textContent = "Delete";
+  deleteButton.style.display = "none";
+  deleteButton.onclick = () =>
+    deleteChild(
+      document.querySelector(`#${listContentId} .finished-tasks`),
+      li
+    );
+
+  const checkBox = document.createElement("input");
+  checkBox.type = "checkbox";
+  checkBox.onchange = () =>
+    taskStatus(li, deleteButton, checkBox, listContentId);
+
+  li.append(checkBox, deleteButton);
+
+  return li;
 };
 
 
@@ -86,10 +99,11 @@ export const deleteChild = (parentNode, targetTask) => {
   parentNode.removeChild(targetTask);
 };
 
-// Gère le statut des tâches entre listes
-const taskStatus = (li, deleteButton, checkBox) => {
-  const taskList = document.getElementById("taskList");
-  const finishList = document.getElementById("finishTaskList");
+const taskStatus = (li, deleteButton, checkBox, listContentId) => {
+  const taskList = document.querySelector(`#${listContentId} .task-list`);
+  const finishList = document.querySelector(
+    `#${listContentId} .finished-tasks`
+  );
 
   if (checkBox.checked) {
     deleteButton.style.display = "inline";
@@ -97,5 +111,26 @@ const taskStatus = (li, deleteButton, checkBox) => {
   } else {
     deleteButton.style.display = "none"; 
     taskList.appendChild(li);
+  }
+};
+
+export const addTask = (listContentId) => {
+  const taskInputText = document.querySelector(`#${listContentId} .task-name`);
+  const taskInputDate = document.querySelector(`#${listContentId} .task-date`);
+
+  if (
+    isFieldValid(taskInputText.value, "You need to fill in the field") &&
+    isFieldValid(taskInputDate.value, "You need to pick a date")
+  ) {
+    const newTask = createTask(
+      taskInputText.value,
+      taskInputDate.value,
+      listContentId
+    );
+    const taskList = document.querySelector(`#${listContentId} .task-list`);
+    taskList.appendChild(newTask);
+
+    taskInputText.value = "";
+    taskInputDate.value = "";
   }
 };
