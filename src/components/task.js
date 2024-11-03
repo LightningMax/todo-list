@@ -55,11 +55,15 @@ const createTask = (taskText, taskDate, listContentId) => {
   deleteButton.textContent = "Delete";
   deleteButton.style.display = "none";
   deleteButton.onclick = () =>
-    deleteChild(document.querySelector(`#${listContentId} .finished-tasks`), li);
+    deleteChild(
+      document.querySelector(`#${listContentId} .finished-tasks`),
+      li
+    );
 
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
-  checkBox.onchange = () => taskStatus(li, deleteButton, checkBox, listContentId);
+  checkBox.onchange = () =>
+    taskStatus(li, deleteButton, checkBox, listContentId);
 
   li.append(checkBox, deleteButton);
 
@@ -72,7 +76,9 @@ export const deleteChild = (parentNode, targetTask) => {
 
 const taskStatus = (li, deleteButton, checkBox, listContentId) => {
   const taskList = document.querySelector(`#${listContentId} .task-list`);
-  const finishList = document.querySelector(`#${listContentId} .finished-tasks`);
+  const finishList = document.querySelector(
+    `#${listContentId} .finished-tasks`
+  );
 
   if (checkBox.checked) {
     deleteButton.style.display = "inline";
@@ -87,8 +93,15 @@ export const addTask = (listContentId) => {
   const taskInputText = document.querySelector(`#${listContentId} .task-name`);
   const taskInputDate = document.querySelector(`#${listContentId} .task-date`);
 
-  if (isFieldValid(taskInputText.value, "You need to fill in the field") && isFieldValid(taskInputDate.value, "You need to pick a date")) {
-    const newTask = createTask(taskInputText.value, taskInputDate.value, listContentId);
+  if (
+    isFieldValid(taskInputText.value, "You need to fill in the field") &&
+    isFieldValid(taskInputDate.value, "You need to pick a date")
+  ) {
+    const newTask = createTask(
+      taskInputText.value,
+      taskInputDate.value,
+      listContentId
+    );
     const taskList = document.querySelector(`#${listContentId} .task-list`);
     taskList.appendChild(newTask);
 
