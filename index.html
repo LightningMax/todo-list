@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
-    <!-- <link rel="stylesheet" href="./styles/styles.css" /> -->
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
     <div id="sidebar">
@@ -18,6 +18,13 @@
       </dialog>
 
       <ul id="menu-list"></ul>
+    </div>
+
+    <button id="show-all-tasks-button">Modify</button>
+    <div id="all-tasks-page" class="hidden">
+      <h2>All Tasks</h2>
+      <ul id="all-tasks-list"></ul>
+      <button id="save-tasks-button">OK</button>
     </div>
 
     <script type="module" src="./src/main.js"></script>
