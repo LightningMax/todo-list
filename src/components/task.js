@@ -48,7 +48,7 @@ const createTask = (taskText, taskDate, listContentId) => {
   const li = document.createElement("li");
   li.className = "task";
   li.id = `task-${countTask + 1}`;
-  li.textContent = `${taskText} ${taskDate.split("-").reverse().join("/")}`;
+  const infoTask = `${taskText} ${taskDate.split("-").reverse().join("/")}`;
 
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-task");
@@ -59,13 +59,14 @@ const createTask = (taskText, taskDate, listContentId) => {
       document.querySelector(`#${listContentId} .finished-tasks`),
       li
     );
-
+  
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
+  
   checkBox.onchange = () =>
     taskStatus(li, deleteButton, checkBox, listContentId);
 
-  li.append(checkBox, deleteButton);
+  li.append(checkBox, infoTask, deleteButton);
 
   return li;
 };
