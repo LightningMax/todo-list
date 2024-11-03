@@ -59,10 +59,10 @@ const createTask = (taskText, taskDate, listContentId) => {
       document.querySelector(`#${listContentId} .finished-tasks`),
       li
     );
-  
+
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
-  
+
   checkBox.onchange = () =>
     taskStatus(li, deleteButton, checkBox, listContentId);
 
