@@ -14,6 +14,11 @@ export const createTodoList = (listId, listTitle) => {
   const titleList = document.createElement("h2");
   titleList.textContent = listTitle;
 
+  const modifyBtn = document.createElement("button");
+  modifyBtn.classList = "modify-button";
+  modifyBtn.textContent = "Modify";
+  modifyBtn.id = `modify-button-${listId}`;
+
   const inputText = document.createElement("input");
   inputText.type = "text";
   inputText.classList.add("task-name");

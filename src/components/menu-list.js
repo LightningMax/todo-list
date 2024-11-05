@@ -8,24 +8,31 @@ const addListModal = () => {
 const createList = () => {
   const menuList = document.getElementById("menu-list");
   const input = document.getElementById("new-list");
-  
-  const countLists = document.querySelectorAll(".list").length
+
+  const countLists = document.querySelectorAll(".list").length;
   const li = document.createElement("li");
-  li.className = "list"  
-  const listId = li.id = `list-${countLists+1}`
-  
+  li.className = "list";
+  const listId = (li.id = `list-${countLists + 1}`);
+
   const btn = document.createElement("button");
-  btn.classList = "list-button"
-  const btnCount = document.querySelectorAll(".list-button").length
-  const listTitle = btn.textContent = input.value || "New list";
-  btn.id = `list-button-${btnCount+1}`;
-  
+  btn.classList = "list-button";
+  const btnCount = document.querySelectorAll(".list-button").length;
+  const listTitle = (btn.textContent = input.value || "New list");
+  btn.id = `list-button-${btnCount + 1}`;
+
+  /**/
+  const modifyBtn = document.createElement("button");
+  modifyBtn.classList = "modify-button";
+  modifyBtn.textContent = "Modify";
+  modifyBtn.id = `modify-button-${btnCount + 1}`;
+
   li.appendChild(btn);
+  li.appendChild(modifyBtn); /**/
   menuList.appendChild(li);
 
   input.value = "";
 
-  createTodoList(listId, listTitle)
+  createTodoList(listId, listTitle);
 };
 
 export const addList = () => {
@@ -37,11 +44,9 @@ export const addList = () => {
 };
 
 export const createDefautTodo = () => {
-  createList()
-}
+  createList();
+};
 
 const hideList = () => {
-  lists = document.querySelectorAll(".list")
-
-  
-}
+  lists = document.querySelectorAll(".list");
+};
