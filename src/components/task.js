@@ -48,7 +48,16 @@ const createTask = (taskText, taskDate, listContentId) => {
   const li = document.createElement("li");
   li.className = "task";
   li.id = `task-${countTask + 1}`;
-  const infoTask = `${taskText} ${taskDate.split("-").reverse().join("/")}`;
+
+  const divInfoTask = document.createElement("div");
+  divInfoTask.className = "info-task";
+
+  const infoText = document.createElement("span");
+  infoText.id = `text-task-${countTask + 1}`;
+  infoText.textContent = taskText;
+  const infoDate = document.createElement("span");
+  infoDate.id = `date-task-${countTask + 1}`;
+  infoDate.textContent = taskDate.split("-").reverse().join("/");
 
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-task");
@@ -62,11 +71,13 @@ const createTask = (taskText, taskDate, listContentId) => {
   
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
-  
+
   checkBox.onchange = () =>
     taskStatus(li, deleteButton, checkBox, listContentId);
 
-  li.append(checkBox, infoTask, deleteButton);
+  divInfoTask.appendChild(infoText);
+  divInfoTask.appendChild(infoDate);
+  li.append(checkBox, divInfoTask, deleteButton);
 
   return li;
 };
