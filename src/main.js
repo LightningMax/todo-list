@@ -1,7 +1,7 @@
 import { Lists } from "./components/menu-list.js";
 
 class App {
-  constructor(lists) {
+  constructor() {
     this.lists = new Lists();
   }
 

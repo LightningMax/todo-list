@@ -1,3 +1,5 @@
+import { TodoList } from "./todo-list.js";
+
 export class Lists {
   constructor() {
     this.lists = [];
@@ -12,8 +14,12 @@ export class Lists {
   }
 
   createList(title) {
-    const list = new List(title);
+    const countLists = document.querySelectorAll(".list").length;
+    const listId = `list-${countLists + 1}`;
+    
+    const list = new List(listId, title);
     this.lists.push(list);
+    this.todoList = new TodoList(listId, title);
   }
 
   addList() {
@@ -33,18 +39,17 @@ export class Lists {
 }
 
 class List {
-  constructor(title) {
+  constructor(id, title) {
     this.title = title;
+    this.id = id
     this.body = this.createBody();
   }
 
   createBody() {
     const menuList = document.getElementById("menu-list");
-
-    const countLists = document.querySelectorAll(".list").length;
     const li = document.createElement("li");
     li.className = "list";
-    li.id = `list-${countLists + 1}`;
+    li.id = this.id;
 
     const btn = document.createElement("button");
     btn.classList = "list-button";
