@@ -53,10 +53,10 @@ const createTask = (taskText, taskDate, listContentId) => {
   divInfoTask.className = "info-task";
 
   const infoText = document.createElement("span");
-  infoText.id = `textTask-${countTask + 1}`;
+  infoText.id = `text-task-${countTask + 1}`;
   infoText.textContent = taskText;
   const infoDate = document.createElement("span");
-  infoDate.id = `dateTask-${countTask + 1}`;
+  infoDate.id = `date-task-${countTask + 1}`;
   infoDate.textContent = taskDate.split("-").reverse().join("/");
 
   const deleteButton = document.createElement("button");
