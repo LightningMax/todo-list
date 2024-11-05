@@ -1,7 +1,6 @@
 export class Lists {
   constructor() {
     this.lists = [];
-    this.initializer();
   }
 
   initializer() {
@@ -22,8 +21,8 @@ export class Lists {
     const input = document.getElementById("new-list");
 
     confirmAddList.onclick = () => this.createList(input.value);
-    input.value = ""
-    
+    input.value = "";
+
     console.log(this.lists);
   }
 

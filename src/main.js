@@ -2,9 +2,13 @@ import { Lists } from "./components/menu-list.js";
 
 class App {
   constructor(lists) {
-    this.lists = lists;
+    this.lists = new Lists();
+  }
+
+  initialize() {
+    this.lists.initializer();
   }
 }
 
-const lists = new Lists();
-const app = App(lists);
+const app = new App();
+app.initialize();
