@@ -1,4 +1,3 @@
-import { addList, createDefautTodo } from "./components/menu-list.js";
+import { Lists } from "./components/menu-list.js";
 
-createDefautTodo()
-addList()
+const lists = new Lists()

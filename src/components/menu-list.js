@@ -1,47 +1,62 @@
-import { createTodoList } from "./task.js";
+export class Lists {
+  constructor() {
+    this.lists = [];
+    this.initializer();
+  }
 
-const addListModal = () => {
-  const listModal = document.getElementById("list-modal");
-  listModal.showModal();
-};
+  initializer() {
+    const addListButton = document.getElementById("add-list-button");
+    addListButton.onclick = () => {
+      this.showModal();
+      this.addList();
+    };
+  }
 
-const createList = () => {
-  const menuList = document.getElementById("menu-list");
-  const input = document.getElementById("new-list");
-  
-  const countLists = document.querySelectorAll(".list").length
-  const li = document.createElement("li");
-  li.className = "list"  
-  const listId = li.id = `list-${countLists+1}`
-  
-  const btn = document.createElement("button");
-  btn.classList = "list-button"
-  const btnCount = document.querySelectorAll(".list-button").length
-  const listTitle = btn.textContent = input.value || "New list";
-  btn.id = `list-button-${btnCount+1}`;
-  
-  li.appendChild(btn);
-  menuList.appendChild(li);
+  createList(title) {
+    const list = new List(title);
+    this.lists.push(list);
+  }
 
-  input.value = "";
+  addList() {
+    const confirmAddList = document.getElementById("confirm-add-list");
+    const input = document.getElementById("new-list");
 
-  createTodoList(listId, listTitle)
-};
+    confirmAddList.onclick = () => this.createList(input.value);
+    input.value = ""
+    
+    console.log(this.lists);
+  }
 
-export const addList = () => {
-  const addListButton = document.getElementById("add-list-button");
-  const confirmAddList = document.getElementById("confirm-add-list");
-
-  addListButton.onclick = addListModal;
-  confirmAddList.onclick = createList;
-};
-
-export const createDefautTodo = () => {
-  createList()
+  showModal() {
+    const listModal = document.getElementById("list-modal");
+    listModal.showModal();
+  }
 }
 
-const hideList = () => {
-  lists = document.querySelectorAll(".list")
+class List {
+  constructor(title) {
+    this.title = title;
+    this.body = this.createBody();
+  }
 
-  
+  createBody() {
+    const menuList = document.getElementById("menu-list");
+
+    const countLists = document.querySelectorAll(".list").length;
+    const li = document.createElement("li");
+    li.className = "list";
+    li.id = `list-${countLists + 1}`;
+
+    const btn = document.createElement("button");
+    btn.classList = "list-button";
+    const btnCount = document.querySelectorAll(".list-button").length;
+    const listTitle = this.title || "New list";
+    btn.textContent = listTitle;
+    btn.id = `list-button-${btnCount + 1}`;
+
+    li.appendChild(btn);
+    menuList.appendChild(li);
+
+    return li;
+  }
 }
