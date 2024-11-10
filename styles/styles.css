@@ -1,30 +1,235 @@
+/* Réinitialisation de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style général du body */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
+    background-color: #f0f0f0;
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
     padding: 20px;
 }
 
-.container {
-    max-width: 600px;
-    margin: auto;
+/* Sidebar collée à gauche et sans arrondis */
+#sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Styles */
+#list-modal {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+#list-modal label {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+#list-modal input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#list-modal button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#list-modal button:hover {
+    background-color: #45a049;
+}
+
+/* Bouton pour ajouter une liste */
+#add-list-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#menu-list {
+    list-style-type: none;
+    width: 100%;
+    padding: 0;
+    overflow-y: auto;
+}
+
+/* Boutons pour chaque liste dans la sidebar */
+.list-button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    background-color: #444;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Conteneur pour les tâches */
+.todo-container {
+    flex: 1;
     background-color: #fff;
     padding: 20px;
+    margin-left: 250px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: space-between; /* Permet de placer le fieldset en bas */
 }
-input, button {
-    padding: 10px;
-    margin: 5px;
+
+/* Titre de la liste sélectionnée */
+.todo-container h2 {
+    margin-bottom: 20px;
 }
-ul {
+
+/* Champs de saisie pour les tâches */
+.task-inputs {
+    display: flex; /* Align items in a row */
+    align-items: center; /* Center items vertically */
+    gap: 10px; /* Space between inputs */
+    margin-bottom: 15px;
+}
+
+/* Réduire la largeur de la tâche */
+.task-name {
+    min-width: 100px; /* Minimum width for task name */
+    width: 150px; /* Set a specific width */
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 36px; /* Align with the height of the task date */
+}
+
+.task-date {
+    width: 90px; /* Set width for date input */
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 36px; /* Align with task name */
+}
+
+.add-task-button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Liste des tâches */
+.task-list,
+.finished-tasks {
     list-style-type: none;
     padding: 0;
+    margin-top: 10px;
 }
-li {
-    background-color: #e2e2e2;
-    margin: 5px 0;
-    padding: 10px;
+
+/* Style de chaque tâche */
+.task {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+}
+
+/* Case à cocher alignée avec le texte */
+.task .task-checkbox {
+    margin-right: 8px;
+}
+
+.task .info-task {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task .task-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.task .task-date {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Style pour le texte barré si la tâche est terminée */
+.task.completed .task-name {
+    text-decoration: line-through;
+    color: #888;
+}
+
+/* Styles pour le fieldset des tâches terminées */
+fieldset {
+    margin-top: auto; /* Le fieldset se place en bas */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    overflow-y: auto; /* Permet de défiler si nécessaire */
+    max-height: 200px; /* Limite la hauteur */
+}
+
+/* Media Queries pour petits écrans */
+@media (max-width: 600px) {
+    #sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .todo-container {
+        margin-left: 0;
+        width: 100%;
+    }
 }
