@@ -1,4 +1,4 @@
-import { Tasks } from "./task";
+import { Tasks } from "./task.js";
 
 export class TodoLists {
   constructor() {
@@ -67,7 +67,7 @@ export class TodoList {
     fieldset.append(legend, finishedTasks);
     document.body.appendChild(div);
 
-    return div
+    return div;
   }
 
   hide() {

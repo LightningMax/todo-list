@@ -1,5 +1,4 @@
-import { createTodoList } from "./task.js";
-import { Tasks } from "./task.js";
+import { createTodoList, Tasks } from "./task.js";
 
 const saveData = () => {
   const lists = [];
