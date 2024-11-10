@@ -1,10 +1,12 @@
 import { Lists } from "./menu-list.js";
+import { TodoLists } from "./components/todo-list.js";
 import { loadData, saveData, exportData, importData, createButtons } from "./storage.js";
 
 
 class App {
-  constructor(lists) {
-    this.lists = new Lists();
+  constructor() {
+      this.todoLists = new TodoLists();
+      this.lists = new Lists(this.todoLists);
   }
 
   initialize() {
