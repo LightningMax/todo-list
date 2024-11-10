@@ -1,47 +1,73 @@
-import { createTodoList } from "./task.js";
+import { TodoList } from "./todo-list.js";
 
-const addListModal = () => {
-  const listModal = document.getElementById("list-modal");
-  listModal.showModal();
-};
+export class Lists {
+  constructor(todoLists) {
+    this.lists = [];
+    this.todoLists = todoLists;
+  }
 
-const createList = () => {
-  const menuList = document.getElementById("menu-list");
-  const input = document.getElementById("new-list");
-  
-  const countLists = document.querySelectorAll(".list").length
-  const li = document.createElement("li");
-  li.className = "list"  
-  const listId = li.id = `list-${countLists+1}`
-  
-  const btn = document.createElement("button");
-  btn.classList = "list-button"
-  const btnCount = document.querySelectorAll(".list-button").length
-  const listTitle = btn.textContent = input.value || "New list";
-  btn.id = `list-button-${btnCount+1}`;
-  
-  li.appendChild(btn);
-  menuList.appendChild(li);
+  initialize() {
+    const addListButton = document.getElementById("add-list-button");
+    addListButton.onclick = () => {
+      this.showModal();
+      this.addList();
+    };
+  }
 
-  input.value = "";
+  createList(title) {
+    const countLists = document.querySelectorAll(".list").length;
+    const listId = `list-${countLists + 1}`;
+    
+    const list = new List(listId, title, this.showTodoList.bind(this));
+    this.lists.push(list);
+    
+    const todoList = new TodoList(listId, title);
+    this.showTodoList(listId);
+    this.todoLists.addTodoList(todoList);
+  }
 
-  createTodoList(listId, listTitle)
-};
+  showTodoList(listId) {
+    this.todoLists.showCurrentList(listId); 
+  }
 
-export const addList = () => {
-  const addListButton = document.getElementById("add-list-button");
-  const confirmAddList = document.getElementById("confirm-add-list");
+  addList() {
+    const confirmAddList = document.getElementById("confirm-add-list");
+    const input = document.getElementById("new-list");
 
-  addListButton.onclick = addListModal;
-  confirmAddList.onclick = createList;
-};
+    confirmAddList.onclick = () => this.createList(input.value);
+    input.value = "";
+  }
 
-export const createDefautTodo = () => {
-  createList()
+  showModal() {
+    const listModal = document.getElementById("list-modal");
+    listModal.showModal();
+  }
 }
 
-const hideList = () => {
-  lists = document.querySelectorAll(".list")
+class List {
+  constructor(id, title, showTodoListCallback) {
+    this.showTodoList = showTodoListCallback
+    this.title = title;
+    this.id = id
+    this.body = this.createBody();
+  }
 
-  
+  createBody() {
+    const menuList = document.getElementById("menu-list");
+    const li = document.createElement("li");
+    li.className = "list";
+    li.id = this.id;
+
+    const btn = document.createElement("button");
+    btn.classList = "list-button";
+    const btnCount = document.querySelectorAll(".list-button").length;
+    const listTitle = this.title || "New list";
+    btn.textContent = listTitle;
+    btn.id = `list-button-${btnCount + 1}`;
+    btn.onclick = () => this.showTodoList(this.id);
+    li.appendChild(btn);
+    menuList.appendChild(li);
+
+    return li;
+  }
 }
