@@ -1,11 +1,12 @@
 import { TodoList } from "./todo-list.js";
 
 export class Lists {
-  constructor() {
+  constructor(todoLists) {
     this.lists = [];
+    this.todoLists = todoLists;
   }
 
-  initializer() {
+  initialize() {
     const addListButton = document.getElementById("add-list-button");
     addListButton.onclick = () => {
       this.showModal();
@@ -17,9 +18,16 @@ export class Lists {
     const countLists = document.querySelectorAll(".list").length;
     const listId = `list-${countLists + 1}`;
     
-    const list = new List(listId, title);
+    const list = new List(listId, title, this.showTodoList.bind(this));
     this.lists.push(list);
-    this.todoList = new TodoList(listId, title);
+    
+    const todoList = new TodoList(listId, title);
+    this.showTodoList(listId);
+    this.todoLists.addTodoList(todoList);
+  }
+
+  showTodoList(listId) {
+    this.todoLists.showCurrentList(listId); 
   }
 
   addList() {
@@ -28,8 +36,6 @@ export class Lists {
 
     confirmAddList.onclick = () => this.createList(input.value);
     input.value = "";
-
-    console.log(this.lists);
   }
 
   showModal() {
@@ -39,7 +45,8 @@ export class Lists {
 }
 
 class List {
-  constructor(id, title) {
+  constructor(id, title, showTodoListCallback) {
+    this.showTodoList = showTodoListCallback
     this.title = title;
     this.id = id
     this.body = this.createBody();
@@ -57,7 +64,7 @@ class List {
     const listTitle = this.title || "New list";
     btn.textContent = listTitle;
     btn.id = `list-button-${btnCount + 1}`;
-
+    btn.onclick = () => this.showTodoList(this.id);
     li.appendChild(btn);
     menuList.appendChild(li);
 
