@@ -15,7 +15,7 @@ class App {
   }
 
   initialize() {
-    this.lists.initializer();
+    this.lists.initialize();
     loadData();
     createButtons();
     window.addEventListener("beforeunload", saveData);
