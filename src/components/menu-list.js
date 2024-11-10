@@ -51,10 +51,14 @@ export class Lists {
     listModal.showModal();
   }
 
+  
   modifyList(listId, title) {
     // Logique pour modifier la liste
-    alert(`Modify list with ID: ${listId} and title: ${title}`);
-  }
+    const list = this.lists.find(list => list.id === listId);
+    if (list) {
+      list.title = title;
+      list.body.querySelector("button").textContent = title;
+    }
 }
 
 class List {
