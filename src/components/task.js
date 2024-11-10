@@ -64,7 +64,7 @@ class Task {
     const infoText = document.createElement("span");
     infoText.id = `text-task-${countTask + 1}`;
     infoText.textContent = this.title;
-    
+
     const infoDate = document.createElement("span");
     infoDate.id = `date-task-${countTask + 1}`;
     infoDate.textContent = this.date.split("-").reverse().join("/");

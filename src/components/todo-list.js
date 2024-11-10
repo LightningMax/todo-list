@@ -4,20 +4,20 @@ export class TodoLists {
   constructor() {
     this.todoLists = [];
   }
-  
-  addTodoList(list){
+
+  addTodoList(list) {
     this.todoLists.push(list);
   }
 
   hideAllTodoLists() {
     this.todoLists.forEach((todo) => {
-        todo.hide();
-    })
+      todo.hide();
+    });
   }
 
   showCurrentList(listId) {
     this.hideAllTodoLists();
-    const currentList = this.todoLists.find(todo => todo.listId === listId);
+    const currentList = this.todoLists.find((todo) => todo.listId === listId);
     if (currentList) currentList.show();
   }
 }
@@ -72,13 +72,13 @@ export class TodoList {
 
   hide() {
     if (this.element) {
-        this.element.style.display = "none";
+      this.element.style.display = "none";
     }
   }
-  
+
   show() {
     if (this.element) {
-        this.element.style.display = "block";
+      this.element.style.display = "block";
     }
   }
 }

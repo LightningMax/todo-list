@@ -32,8 +32,8 @@ const loadData = () => {
       const tasksInstance = new Tasks(list.id);
 
       list.tasks.forEach((task) => {
-        tasksInstance.tasks.push(task); // Ajoute chaque tâche à l'instance
-        tasksInstance.addTask(); // Utilise addTask pour afficher la tâche
+        tasksInstance.tasks.push(task);
+        tasksInstance.addTask();
       });
     });
   }

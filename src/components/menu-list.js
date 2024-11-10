@@ -17,17 +17,17 @@ export class Lists {
   createList(title) {
     const countLists = document.querySelectorAll(".list").length;
     const listId = `list-${countLists + 1}`;
-    
+
     const list = new List(listId, title, this.showTodoList.bind(this));
     this.lists.push(list);
-    
+
     const todoList = new TodoList(listId, title);
     this.showTodoList(listId);
     this.todoLists.addTodoList(todoList);
   }
 
   showTodoList(listId) {
-    this.todoLists.showCurrentList(listId); 
+    this.todoLists.showCurrentList(listId);
   }
 
   addList() {
@@ -46,9 +46,9 @@ export class Lists {
 
 class List {
   constructor(id, title, showTodoListCallback) {
-    this.showTodoList = showTodoListCallback
+    this.showTodoList = showTodoListCallback;
     this.title = title;
-    this.id = id
+    this.id = id;
     this.body = this.createBody();
   }
 
