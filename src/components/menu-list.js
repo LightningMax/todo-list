@@ -17,17 +17,17 @@ export class Lists {
   createList(title) {
     const countLists = document.querySelectorAll(".list").length;
     const listId = `list-${countLists + 1}`;
-    
+
     const list = new List(listId, title, this.showTodoList.bind(this));
     this.lists.push(list);
-    
+
     const todoList = new TodoList(listId, title);
     this.showTodoList(listId);
     this.todoLists.addTodoList(todoList);
   }
 
   showTodoList(listId) {
-    this.todoLists.showCurrentList(listId); 
+    this.todoLists.showCurrentList(listId);
   }
 
   addList() {
@@ -46,9 +46,9 @@ export class Lists {
 
 class List {
   constructor(id, title, showTodoListCallback) {
-    this.showTodoList = showTodoListCallback
+    this.showTodoList = showTodoListCallback;
     this.title = title;
-    this.id = id
+    this.id = id;
     this.body = this.createBody();
   }
 
@@ -65,9 +65,23 @@ class List {
     btn.textContent = listTitle;
     btn.id = `list-button-${btnCount + 1}`;
     btn.onclick = () => this.showTodoList(this.id);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "delete";
+    deleteBtn.onclick = () => {
+      const todoContent = document.getElementById(`${this.id}-content`);
+      todoContent.remove()
+      this.deleteList()
+    };
+
     li.appendChild(btn);
+    li.append(deleteBtn);
     menuList.appendChild(li);
 
     return li;
+  }
+
+  deleteList() {
+    this.body.remove()
   }
 }
