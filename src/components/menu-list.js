@@ -26,9 +26,11 @@ export class Lists {
     this.showTodoList(listId);
     this.todoLists.addTodoList(todoList);
 
+    // Ajouter le bouton "Modify"
     const modifyButton = new ModifyTask(
       listId,
       title,
+      todoList.tasks.tasks,
       this.modifyList.bind(this)
     );
     list.body.appendChild(modifyButton.element);
@@ -51,14 +53,26 @@ export class Lists {
     listModal.showModal();
   }
 
-  
-  modifyList(listId, title) {
+  modifyList(listId, title, tasks) {
     // Logique pour modifier la liste
-    const list = this.lists.find(list => list.id === listId);
+    const list = this.lists.find((list) => list.id === listId);
     if (list) {
       list.title = title;
       list.body.querySelector("button").textContent = title;
+
+      // Mettre à jour les tâches
+      const todoList = this.todoLists.todoLists.find(
+        (todoList) => todoList.listId === listId
+      );
+      if (todoList) {
+        todoList.tasks.tasks = tasks.map((task) => ({
+          title: task.title,
+          date: task.date,
+        }));
+        todoList.updateTaskList();
+      }
     }
+  }
 }
 
 class List {
