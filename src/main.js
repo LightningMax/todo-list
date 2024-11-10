@@ -1,4 +1,16 @@
-import { addList, createDefautTodo } from "./components/menu-list.js";
+import { Lists } from "./components/menu-list.js";
+import { TodoLists } from "./components/todo-list.js";
 
-createDefautTodo()
-addList()
+class App {
+  constructor() {
+      this.todoLists = new TodoLists();
+      this.lists = new Lists(this.todoLists);
+  }
+
+  initialize() {
+    this.lists.initialize();
+  }
+}
+
+const app = new App();
+app.initialize();
