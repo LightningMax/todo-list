@@ -1,8 +1,24 @@
 import { Tasks } from "./task.js";
 
-class TodoLists {
+export class TodoLists {
   constructor() {
-    this.TodoLists = [];
+    this.todoLists = [];
+  }
+  
+  addTodoList(list){
+    this.todoLists.push(list);
+  }
+
+  hideAllTodoLists() {
+    this.todoLists.forEach((todo) => {
+        todo.hide();
+    })
+  }
+
+  showCurrentList(listId) {
+    this.hideAllTodoLists();
+    const currentList = this.todoLists.find(todo => todo.listId === listId);
+    if (currentList) currentList.show();
   }
 }
 
@@ -50,5 +66,19 @@ export class TodoList {
     div.append(titleList, inputText, inputDate, btnAddTask, listTask, fieldset);
     fieldset.append(legend, finishedTasks);
     document.body.appendChild(div);
+
+    return div
+  }
+
+  hide() {
+    if (this.element) {
+        this.element.style.display = "none";
+    }
+  }
+  
+  show() {
+    if (this.element) {
+        this.element.style.display = "block";
+    }
   }
 }
