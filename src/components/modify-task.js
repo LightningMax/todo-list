@@ -1,12 +1,15 @@
-export const addModifyButton = (taskElement, listContentId) => {
-  const modifyButton = document.createElement("button");
-  modifyButton.classList.add("modify-task");
-  modifyButton.textContent = "Modify";
-  modifyButton.onclick = () => showModifyForm(taskElement, listContentId);
+export class ModifyTask {
+  constructor(listId, title, modifyCallback) {
+    this.listId = listId;
+    this.title = title;
+    this.modifyCallback = modifyCallback;
+    this.element = this.createModifyButton();
+  }
 
-  taskElement.appendChild(modifyButton);
-};
-
-const showModifyForm = (taskElement, listContentId) => {
-  console.log("showModifyForm called");
-};
+  createModifyButton() {
+    const button = document.createElement("button");
+    button.textContent = "Modify";
+    button.onclick = () => this.modifyCallback(this.listId, this.title);
+    return button;
+  }
+}

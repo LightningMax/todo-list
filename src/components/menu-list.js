@@ -1,4 +1,5 @@
 import { TodoList } from "./todo-list.js";
+import { ModifyTask } from "./modify-task.js";
 
 export class Lists {
   constructor(todoLists) {
@@ -24,6 +25,13 @@ export class Lists {
     const todoList = new TodoList(listId, title);
     this.showTodoList(listId);
     this.todoLists.addTodoList(todoList);
+
+    const modifyButton = new ModifyTask(
+      listId,
+      title,
+      this.modifyList.bind(this)
+    );
+    list.body.appendChild(modifyButton.element);
   }
 
   showTodoList(listId) {
@@ -41,6 +49,11 @@ export class Lists {
   showModal() {
     const listModal = document.getElementById("list-modal");
     listModal.showModal();
+  }
+
+  modifyList(listId, title) {
+    // Logique pour modifier la liste
+    alert(`Modify list with ID: ${listId} and title: ${title}`);
   }
 }
 
