@@ -1,10 +1,12 @@
+import { TodoList } from "./todo-list.js";
+
 export class Lists {
-  constructor() {
+  constructor(todoLists) {
     this.lists = [];
-    this.initializer();
+    this.todoLists = todoLists;
   }
 
-  initializer() {
+  initialize() {
     const addListButton = document.getElementById("add-list-button");
     addListButton.onclick = () => {
       this.showModal();
@@ -13,8 +15,19 @@ export class Lists {
   }
 
   createList(title) {
-    const list = new List(title);
+    const countLists = document.querySelectorAll(".list").length;
+    const listId = `list-${countLists + 1}`;
+    
+    const list = new List(listId, title, this.showTodoList.bind(this));
     this.lists.push(list);
+    
+    const todoList = new TodoList(listId, title);
+    this.showTodoList(listId);
+    this.todoLists.addTodoList(todoList);
+  }
+
+  showTodoList(listId) {
+    this.todoLists.showCurrentList(listId); 
   }
 
   addList() {
@@ -22,9 +35,7 @@ export class Lists {
     const input = document.getElementById("new-list");
 
     confirmAddList.onclick = () => this.createList(input.value);
-    input.value = ""
-    
-    console.log(this.lists);
+    input.value = "";
   }
 
   showModal() {
@@ -34,18 +45,18 @@ export class Lists {
 }
 
 class List {
-  constructor(title) {
+  constructor(id, title, showTodoListCallback) {
+    this.showTodoList = showTodoListCallback
     this.title = title;
+    this.id = id
     this.body = this.createBody();
   }
 
   createBody() {
     const menuList = document.getElementById("menu-list");
-
-    const countLists = document.querySelectorAll(".list").length;
     const li = document.createElement("li");
     li.className = "list";
-    li.id = `list-${countLists + 1}`;
+    li.id = this.id;
 
     const btn = document.createElement("button");
     btn.classList = "list-button";
@@ -53,7 +64,7 @@ class List {
     const listTitle = this.title || "New list";
     btn.textContent = listTitle;
     btn.id = `list-button-${btnCount + 1}`;
-
+    btn.onclick = () => this.showTodoList(this.id);
     li.appendChild(btn);
     menuList.appendChild(li);
 
