@@ -1,4 +1,4 @@
-import { Tasks } from "./task.js";
+import { Tasks } from "./task";
 
 export class TodoLists {
   constructor() {

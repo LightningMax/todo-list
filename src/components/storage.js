@@ -1,4 +1,5 @@
-import { createTodoList, addTask } from "./task.js";
+import { createTodoList } from "./task.js";
+import { Tasks } from "./task.js";
 
 const saveData = () => {
   const lists = [];
@@ -28,8 +29,11 @@ const loadData = () => {
   if (storedData) {
     storedData.forEach((list) => {
       createTodoList(list.id, list.title);
+      const tasksInstance = new Tasks(list.id);
+
       list.tasks.forEach((task) => {
-        addTask(list.id, task.name, task.date, task.completed);
+        tasksInstance.tasks.push(task); // Ajoute chaque tâche à l'instance
+        tasksInstance.addTask(); // Utilise addTask pour afficher la tâche
       });
     });
   }

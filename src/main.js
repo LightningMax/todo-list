@@ -1,6 +1,6 @@
-import { Lists } from "./menu-list.js";
+import { Lists } from "./components/menu-list.js";
 import { TodoLists } from "./components/todo-list.js";
-import { loadData, saveData, exportData, importData, createButtons } from "./storage.js";
+import { loadData, saveData, exportData, importData, createButtons } from "./components/storage.js";
 
 
 class App {
