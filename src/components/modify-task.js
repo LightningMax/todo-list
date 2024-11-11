@@ -1,10 +1,12 @@
+import { Tasks } from "./task.js";
+
 export class ModifyTask {
-  constructor(listId, title, tasks, modifyCallback) {
+  constructor(listId, title, tasks, tasksInstance) {
     this.verify = false;
     this.listId = listId;
     this.title = title;
     this.tasks = tasks;
-    this.modifyCallback = modifyCallback;
+    this.tasksInstance = tasksInstance;
     this.element = this.createModifyButton();
   }
 
@@ -12,14 +14,13 @@ export class ModifyTask {
     const button = document.createElement("button");
     button.textContent = "Modify";
     button.onclick = () => {
-      if (this.verify === false) {
+      if (!this.verify) {
         this.showModifyList();
         this.verify = true;
       } else {
         alert("Modify is already enabled");
       }
     };
-
     return button;
   }
 
@@ -39,21 +40,28 @@ export class ModifyTask {
     titleInput.value = this.title;
 
     const saveButton = document.createElement("button");
-    saveButton.textContent = "Save";
+    saveButton.textContent = "Save Changes";
     saveButton.onclick = () => {
-      const updatedTasks = [];
-      const taskElements = document.querySelectorAll(".modify-task-list li");
+      const taskListElement = document.querySelector(`#${this.listId}-content .task-list`);
+      
+      // Clear the existing tasks in the UI
+      taskListElement.innerHTML = "";
+
+      // Get tasks from modification view and add them to the UI using addTask
+      const taskElements = document.querySelectorAll(".modify-task-item");
       taskElements.forEach((taskElement) => {
         const taskTitleInput = taskElement.querySelector("input[type='text']");
         const taskDateInput = taskElement.querySelector("input[type='date']");
-        if (taskTitleInput && taskDateInput) {
-          updatedTasks.push({
-            title: taskTitleInput.value,
-            date: taskDateInput.value,
-          });
-        }
+        const taskCompletedCheckbox = taskElement.querySelector("input[type='checkbox']");
+
+        this.tasksInstance.addTask(taskTitleInput.value, taskDateInput.value, taskCompletedCheckbox.checked, true);
       });
-      this.modifyCallback(this.listId, titleInput.value, updatedTasks);
+
+      // Update the list title in the UI
+      const listTitleElement = document.querySelector(`#${this.listId}-content h2`);
+      listTitleElement.textContent = titleInput.value;
+
+      // Close the modification dialog
       modifyListContainer.remove();
       this.verify = false;
     };
@@ -61,28 +69,28 @@ export class ModifyTask {
     const taskList = document.createElement("ul");
     taskList.classList.add("modify-task-list");
 
-    if (this.tasks.length === 0) {
-      const noElementsMessage = document.createElement("li");
-      noElementsMessage.textContent = "No elements";
-      taskList.appendChild(noElementsMessage);
-    } else {
-      this.tasks.forEach((task) => {
-        const taskElement = document.createElement("li");
+    this.tasks.forEach((task) => {
+      const taskElement = document.createElement("li");
+      taskElement.classList.add("modify-task-item");
 
-        const taskTitleInput = document.createElement("input");
-        taskTitleInput.type = "text";
-        taskTitleInput.value = task.title;
+      const taskTitleInput = document.createElement("input");
+      taskTitleInput.type = "text";
+      taskTitleInput.value = task.title;
 
-        const taskDateInput = document.createElement("input");
-        taskDateInput.type = "date";
-        taskDateInput.value = task.date;
+      const taskDateInput = document.createElement("input");
+      taskDateInput.type = "date";
+      taskDateInput.value = task.date;
 
-        taskElement.appendChild(taskTitleInput);
-        taskElement.appendChild(taskDateInput);
+      const taskCompletedCheckbox = document.createElement("input");
+      taskCompletedCheckbox.type = "checkbox";
+      taskCompletedCheckbox.checked = task.completed;
 
-        taskList.appendChild(taskElement);
-      });
-    }
+      taskElement.appendChild(taskTitleInput);
+      taskElement.appendChild(taskDateInput);
+      taskElement.appendChild(taskCompletedCheckbox);
+
+      taskList.appendChild(taskElement);
+    });
 
     const titleContainer = document.createElement("div");
     titleContainer.classList.add("title-container");
@@ -94,13 +102,7 @@ export class ModifyTask {
     tasksContainer.appendChild(document.createTextNode("Tasks:"));
     tasksContainer.appendChild(taskList);
 
-    modifyListContainer.append(
-      closeButton,
-      titleContainer,
-      tasksContainer,
-      saveButton
-    );
-
+    modifyListContainer.append(closeButton, titleContainer, tasksContainer, saveButton);
     document.body.appendChild(modifyListContainer);
   }
 }
