@@ -35,7 +35,9 @@ export class Tasks {
     this.tasks.push(task);
 
     const taskList = document.querySelector(`#${this.listContentId} .task-list`);
-    taskList.appendChild(task.element);
+    if (taskList) {
+      taskList.appendChild(task.element);
+    }
 
     if (completed) {
       const checkBox = task.element.querySelector("input[type='checkbox']");
