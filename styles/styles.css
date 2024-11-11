@@ -5,10 +5,6 @@
   --secondary-background-color: #282727;
 }
 
-:root {
-
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -98,17 +94,15 @@ body {
   width: 24px;
   height: 24px;
   padding: 10px;
-  
-  background-image: url(../assets/icons/plus-circle.svg);
-  color: white;
+  color: #282727;
   
   cursor: pointer;
 }
 
-#add-list-button:hover {
+/* #add-list-button:hover {
   
   background-image: url(../assets/icons/plus-circle-solid.svg);
-}
+} */
 
 #menu-list {
   list-style-type: none;
@@ -204,13 +198,10 @@ body {
 .task input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
-  /* background-color: #eee; */
   background-image: url('../assets/icons/ellipse-outline.svg');
   margin: 0;
-  /* font: inherit; */
   width: 18px;
   height: 18px;
-  /* border: 2px solid #4caf50; */
   border-radius: 4px;
   display: grid;
   place-content: center;
@@ -262,6 +253,25 @@ fieldset {
   flex-grow: 1;
   margin-top: auto;
 }
+
+.delete-list-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/trash.svg");
+}
+
+.modify-task-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/edit-pencil.svg");
+}
+
 
 /* Media queries for smaller screens */
 @media (max-width: 600px) {

@@ -83,29 +83,23 @@ const importDataFromCSV = (file) => {
   reader.readAsText(file);
 };
 
-const createButtons = () => {
-  const sidebar = document.getElementById("sidebar");
 
-  const downloadButton = document.createElement("button");
-  downloadButton.textContent = "Télécharger CSV";
-  downloadButton.onclick = exportDataAsCSV;
-  sidebar.appendChild(downloadButton);
 
-  const importButton = document.createElement("button");
-  importButton.textContent = "Importer fichier CSV";
-  importButton.onclick = () => document.getElementById("import-file").click();
-  sidebar.appendChild(importButton);
-
-  const fileInput = document.createElement("input");
-  fileInput.type = "file";
-  fileInput.id = "import-file";
-  fileInput.style.display = "none";
-  fileInput.accept = ".csv";
-  fileInput.onchange = (event) => {
+const importExport = () => {
+  const downloadButton = document.getElementById("download-button");
+  const importButton = document.getElementById("import-button");
+  const importFileInput = document.getElementById("import-file");
+  
+  downloadButton.addEventListener("click", exportDataAsCSV);
+  
+  importButton.addEventListener("click", () => {
+    importFileInput.click();
+  });
+  
+  importFileInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file) importDataFromCSV(file);
-  };
-  sidebar.appendChild(fileInput);
-};
+  });
+}
 
-export default createButtons;
+export default importExport
