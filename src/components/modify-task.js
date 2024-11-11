@@ -1,5 +1,6 @@
 export class ModifyTask {
   constructor(listId, title, tasks, modifyCallback) {
+    this.verify = false;
     this.listId = listId;
     this.title = title;
     this.tasks = tasks;
@@ -10,7 +11,15 @@ export class ModifyTask {
   createModifyButton() {
     const button = document.createElement("button");
     button.textContent = "Modify";
-    button.onclick = () => this.showModifyList();
+    button.onclick = () => {
+      if (this.verify === false) {
+        this.showModifyList();
+        this.verify = true;
+      } else {
+        alert("Modify is already enabled");
+      }
+    };
+
     return button;
   }
 
@@ -20,7 +29,10 @@ export class ModifyTask {
 
     const closeButton = document.createElement("button");
     closeButton.textContent = "Close";
-    closeButton.onclick = () => modifyListContainer.remove();
+    closeButton.onclick = () => {
+      modifyListContainer.remove();
+      this.verify = false;
+    };
 
     const titleInput = document.createElement("input");
     titleInput.type = "text";
@@ -43,6 +55,7 @@ export class ModifyTask {
       });
       this.modifyCallback(this.listId, titleInput.value, updatedTasks);
       modifyListContainer.remove();
+      this.verify = false;
     };
 
     const taskList = document.createElement("ul");
@@ -71,17 +84,22 @@ export class ModifyTask {
       });
     }
 
-    modifyListContainer.appendChild(closeButton);
-    modifyListContainer.appendChild(document.createElement("br"));
-    modifyListContainer.appendChild(document.createTextNode("Title:"));
-    modifyListContainer.appendChild(document.createElement("br"));
-    modifyListContainer.appendChild(titleInput);
-    modifyListContainer.appendChild(document.createElement("br"));
-    modifyListContainer.appendChild(document.createTextNode("Tasks:"));
-    modifyListContainer.appendChild(document.createElement("br"));
-    modifyListContainer.appendChild(taskList);
-    modifyListContainer.appendChild(document.createElement("br"));
-    modifyListContainer.appendChild(saveButton);
+    const titleContainer = document.createElement("div");
+    titleContainer.classList.add("title-container");
+    titleContainer.appendChild(document.createTextNode("Title:"));
+    titleContainer.appendChild(titleInput);
+
+    const tasksContainer = document.createElement("div");
+    tasksContainer.classList.add("tasks-container");
+    tasksContainer.appendChild(document.createTextNode("Tasks:"));
+    tasksContainer.appendChild(taskList);
+
+    modifyListContainer.append(
+      closeButton,
+      titleContainer,
+      tasksContainer,
+      saveButton
+    );
 
     document.body.appendChild(modifyListContainer);
   }
