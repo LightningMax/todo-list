@@ -29,12 +29,18 @@ export class ModifyTask {
     const saveButton = document.createElement("button");
     saveButton.textContent = "Save";
     saveButton.onclick = () => {
-      const updatedTasks = Array.from(
-        document.querySelectorAll(".modify-task-list input")
-      ).map((input) => ({
-        title: input.value,
-        date: input.nextElementSibling.value,
-      }));
+      const updatedTasks = [];
+      const taskElements = document.querySelectorAll(".modify-task-list li");
+      taskElements.forEach((taskElement) => {
+        const taskTitleInput = taskElement.querySelector("input[type='text']");
+        const taskDateInput = taskElement.querySelector("input[type='date']");
+        if (taskTitleInput && taskDateInput) {
+          updatedTasks.push({
+            title: taskTitleInput.value,
+            date: taskDateInput.value,
+          });
+        }
+      });
       this.modifyCallback(this.listId, titleInput.value, updatedTasks);
       modifyListContainer.remove();
     };
