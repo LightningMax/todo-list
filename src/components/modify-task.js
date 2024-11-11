@@ -11,6 +11,7 @@ export class ModifyTask {
   createModifyButton() {
     const button = document.createElement("button");
     button.textContent = "Modify";
+    button.classList.add("modify-task-button"); // Ajout de la classe CSS pour le bouton "Modify"
     button.onclick = () => {
       if (this.verify === false) {
         this.showModifyList();
@@ -19,7 +20,6 @@ export class ModifyTask {
         alert("Modify is already enabled");
       }
     };
-
     return button;
   }
 
@@ -46,10 +46,14 @@ export class ModifyTask {
       taskElements.forEach((taskElement) => {
         const taskTitleInput = taskElement.querySelector("input[type='text']");
         const taskDateInput = taskElement.querySelector("input[type='date']");
-        if (taskTitleInput && taskDateInput) {
+        const taskCheckbox = taskElement.querySelector(
+          "input[type='checkbox']"
+        );
+        if (taskTitleInput && taskDateInput && taskCheckbox) {
           updatedTasks.push({
             title: taskTitleInput.value,
             date: taskDateInput.value,
+            completed: taskCheckbox.checked,
           });
         }
       });
@@ -77,8 +81,13 @@ export class ModifyTask {
         taskDateInput.type = "date";
         taskDateInput.value = task.date;
 
+        const taskCheckbox = document.createElement("input");
+        taskCheckbox.type = "checkbox";
+        taskCheckbox.checked = task.completed || false;
+
         taskElement.appendChild(taskTitleInput);
         taskElement.appendChild(taskDateInput);
+        taskElement.appendChild(taskCheckbox);
 
         taskList.appendChild(taskElement);
       });

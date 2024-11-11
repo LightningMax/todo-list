@@ -66,6 +66,7 @@ export class Lists {
         todoList.tasks.tasks = tasks.map((task) => ({
           title: task.title,
           date: task.date,
+          completed: task.completed,
         }));
         todoList.updateTaskList();
       }
