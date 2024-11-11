@@ -61,6 +61,15 @@ export class Tasks {
       );
     }
   }
+
+  updateTask(task) {
+    const taskIndex = this.tasks.findIndex(
+      (t) => t.title === task.title && t.date === task.date
+    );
+    if (taskIndex !== -1) {
+      this.tasks[taskIndex].completed = task.completed;
+    }
+  }
 }
 
 class Task {

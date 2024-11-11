@@ -13,6 +13,7 @@ export class ModifyTask {
   createModifyButton() {
     const button = document.createElement("button");
     button.textContent = "Modify";
+    button.classList.add("modify-task-button"); // Ajout de la classe CSS pour le bouton "Modify"
     button.onclick = () => {
       if (!this.verify) {
         this.showModifyList();
