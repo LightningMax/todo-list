@@ -14,11 +14,10 @@ const exportDataAsCSV = () => {
     const taskElements = document.querySelectorAll(`#${listId}-content .task`);
 
     taskElements.forEach((taskElement) => {
-      const taskName = taskElement.querySelector(".info-task span").textContent;
-      const taskDateElement = taskElement.querySelector(".task-date");
-      const taskDate = taskDateElement
-        ? taskDateElement.getAttribute("data-date")
-        : ""; // Retrieve date attribute
+      const elements = taskElement.querySelectorAll("span");
+      const taskName = elements[0].textContent;
+      const taskDateElement = elements[1].textContent;
+      const taskDate = taskDateElement;
       const isCompleted = taskElement.querySelector("input[type='checkbox']")
         .checked
         ? "Yes"
