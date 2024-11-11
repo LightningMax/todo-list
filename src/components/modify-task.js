@@ -13,7 +13,7 @@ export class ModifyTask {
   createModifyButton() {
     const button = document.createElement("button");
     button.textContent = "Modify";
-    button.classList.add("modify-task-button"); // Ajout de la classe CSS pour le bouton "Modify"
+    button.classList.add("modify-task-button");
     button.onclick = () => {
       if (!this.verify) {
         this.showModifyList();
@@ -44,25 +44,46 @@ export class ModifyTask {
     saveButton.textContent = "Save Changes";
     saveButton.onclick = () => {
       const taskListElement = document.querySelector(`#${this.listId}-content .task-list`);
-      
+      console.log(this.title)
+      const listTitle = document.querySelector(`#${this.listId} button`)
+      listTitle.textContent = titleInput.value;
       // Clear the existing tasks in the UI
       taskListElement.innerHTML = "";
-
+      
       // Get tasks from modification view and add them to the UI using addTask
       const taskElements = document.querySelectorAll(".modify-task-item");
+      const updatedTasks = []; // Store the updated tasks
+
       taskElements.forEach((taskElement) => {
         const taskTitleInput = taskElement.querySelector("input[type='text']");
         const taskDateInput = taskElement.querySelector("input[type='date']");
         const taskCompletedCheckbox = taskElement.querySelector("input[type='checkbox']");
 
+        const updatedTask = {
+          title: taskTitleInput.value,
+          date: taskDateInput.value,
+          completed: taskCompletedCheckbox.checked,
+        };
+
+        // Add updated task to the array
+        updatedTasks.push(updatedTask);
+
+        // Add the task to the tasks instance
         this.tasksInstance.addTask(taskTitleInput.value, taskDateInput.value, taskCompletedCheckbox.checked, true);
+        
       });
+      const mod = document.querySelector(".modify-list-container")
+      mod.remove()
+
+      // Update the tasks array with the updated tasks
+      this.tasks = updatedTasks;
 
       // Update the list title in the UI
       const listTitleElement = document.querySelector(`#${this.listId}-content h2`);
       listTitleElement.textContent = titleInput.value;
 
       // Close the modification dialog
+
       modifyListContainer.remove();
       this.verify = false;
     };
