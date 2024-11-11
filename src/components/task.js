@@ -12,10 +12,19 @@ export class Tasks {
     this.listContentId = listContentId;
   }
 
-  addTask(taskName = "", taskDate = "", completed = false, skipValidation = false) {
+  addTask(
+    taskName = "",
+    taskDate = "",
+    completed = false,
+    skipValidation = false
+  ) {
     if (!skipValidation && (taskName === "" || taskDate === "")) {
-      const taskInputText = document.querySelector(`#${this.listContentId} .task-name`);
-      const taskInputDate = document.querySelector(`#${this.listContentId} .task-date`);
+      const taskInputText = document.querySelector(
+        `#${this.listContentId} .task-name`
+      );
+      const taskInputDate = document.querySelector(
+        `#${this.listContentId} .task-date`
+      );
 
       if (
         isFieldValid(taskInputText.value, "You need to fill in the field") &&
@@ -34,7 +43,9 @@ export class Tasks {
     const task = new Task(taskName, taskDate, this.listContentId);
     this.tasks.push(task);
 
-    const taskList = document.querySelector(`#${this.listContentId} .task-list`);
+    const taskList = document.querySelector(
+      `#${this.listContentId} .task-list`
+    );
     if (taskList) {
       taskList.appendChild(task.element);
     }
@@ -42,7 +53,12 @@ export class Tasks {
     if (completed) {
       const checkBox = task.element.querySelector("input[type='checkbox']");
       checkBox.checked = true;
-      task.toggleTaskStatus(task.element, task.element.querySelector(".delete-task"), checkBox, this.listContentId);
+      task.toggleTaskStatus(
+        task.element,
+        task.element.querySelector(".delete-task"),
+        checkBox,
+        this.listContentId
+      );
     }
   }
 }
@@ -56,7 +72,9 @@ class Task {
   }
 
   createTaskElement() {
-    const countTask = document.querySelectorAll(`#${this.listContentId} .task`).length;
+    const countTask = document.querySelectorAll(
+      `#${this.listContentId} .task`
+    ).length;
     const li = document.createElement("li");
     li.className = "task";
     li.id = `task-${countTask + 1}`;
@@ -77,7 +95,10 @@ class Task {
     deleteButton.textContent = "Delete";
     deleteButton.style.display = "none";
     deleteButton.onclick = () =>
-      this.deleteChild(document.querySelector(`#${this.listContentId} .finished-tasks`), li);
+      this.deleteChild(
+        document.querySelector(`#${this.listContentId} .finished-tasks`),
+        li
+      );
 
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
@@ -94,7 +115,9 @@ class Task {
 
   toggleTaskStatus(li, deleteButton, checkBox, listContentId) {
     const taskList = document.querySelector(`#${listContentId} .task-list`);
-    const finishList = document.querySelector(`#${listContentId} .finished-tasks`);
+    const finishList = document.querySelector(
+      `#${listContentId} .finished-tasks`
+    );
 
     if (checkBox.checked) {
       deleteButton.style.display = "inline";

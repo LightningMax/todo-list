@@ -1,6 +1,6 @@
 import { Tasks } from "./task.js";
 import { todoLists, TodoList } from "./todo-list.js";
-import  lists  from "./menu-list.js";
+import lists from "./menu-list.js";
 
 const exportDataAsCSV = () => {
   // Prepare CSV rows with headers
@@ -16,8 +16,13 @@ const exportDataAsCSV = () => {
     taskElements.forEach((taskElement) => {
       const taskName = taskElement.querySelector(".info-task span").textContent;
       const taskDateElement = taskElement.querySelector(".task-date");
-      const taskDate = taskDateElement ? taskDateElement.getAttribute("data-date") : ""; // Retrieve date attribute
-      const isCompleted = taskElement.querySelector("input[type='checkbox']").checked ? "Yes" : "No";
+      const taskDate = taskDateElement
+        ? taskDateElement.getAttribute("data-date")
+        : ""; // Retrieve date attribute
+      const isCompleted = taskElement.querySelector("input[type='checkbox']")
+        .checked
+        ? "Yes"
+        : "No";
 
       rows.push([listId, listTitle, taskName, taskDate, isCompleted]);
     });
