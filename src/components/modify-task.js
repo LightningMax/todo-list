@@ -72,8 +72,9 @@ export class ModifyTask {
         this.tasksInstance.addTask(taskTitleInput.value, taskDateInput.value, taskCompletedCheckbox.checked, true);
         
       });
-      const mod = document.querySelector(".modify-list-container")
+      const mod = document.querySelector(".modify-list-container div")
       mod.remove()
+      titleInput.value = this.title;
 
       // Update the tasks array with the updated tasks
       this.tasks = updatedTasks;
