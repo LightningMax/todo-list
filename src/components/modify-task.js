@@ -1,5 +1,3 @@
-import { Tasks } from "./task.js";
-
 export class ModifyTask {
   constructor(listId, title, tasks, tasksInstance) {
     this.verify = false;
@@ -13,6 +11,7 @@ export class ModifyTask {
   createModifyButton() {
     const button = document.createElement("button");
     button.textContent = "Modify";
+    button.classList.add("modify-task-button");
     button.onclick = () => {
       if (!this.verify) {
         this.showModifyList();
@@ -35,39 +34,65 @@ export class ModifyTask {
       this.verify = false;
     };
 
+    // Input pour le titre de la liste (initialisé avec le titre actuel)
     const titleInput = document.createElement("input");
     titleInput.type = "text";
-    titleInput.value = this.title;
+    titleInput.value = this.title;  // Le titre actuel de la liste
 
     const saveButton = document.createElement("button");
     saveButton.textContent = "Save Changes";
     saveButton.onclick = () => {
       const taskListElement = document.querySelector(`#${this.listId}-content .task-list`);
-      
-      // Clear the existing tasks in the UI
+
+      // Effacer les tâches existantes dans l'UI
       taskListElement.innerHTML = "";
 
-      // Get tasks from modification view and add them to the UI using addTask
+      // Mettre à jour le titre de la liste
+      const listTitle = document.querySelector(`#${this.listId} button`);
+      listTitle.textContent = titleInput.value;  // Modifier le texte du bouton (titre de la liste)
+
+      // Mettre à jour la variable `this.title` avec le nouveau titre
+      this.title = titleInput.value;  // Mise à jour de `this.title`
+
+      // Ajouter les tâches modifiées dans la liste
       const taskElements = document.querySelectorAll(".modify-task-item");
+      const updatedTasks = []; // Stocke les tâches mises à jour
+
       taskElements.forEach((taskElement) => {
         const taskTitleInput = taskElement.querySelector("input[type='text']");
         const taskDateInput = taskElement.querySelector("input[type='date']");
         const taskCompletedCheckbox = taskElement.querySelector("input[type='checkbox']");
 
+        const updatedTask = {
+          title: taskTitleInput.value,
+          date: taskDateInput.value,
+          completed: taskCompletedCheckbox.checked,
+        };
+
+        // Ajouter la tâche mise à jour dans le tableau
+        updatedTasks.push(updatedTask);
+
+        // Ajouter la tâche à l'instance de tâches
         this.tasksInstance.addTask(taskTitleInput.value, taskDateInput.value, taskCompletedCheckbox.checked, true);
       });
 
-      // Update the list title in the UI
-      const listTitleElement = document.querySelector(`#${this.listId}-content h2`);
-      listTitleElement.textContent = titleInput.value;
-
-      // Close the modification dialog
+      // Supprimer le conteneur de modification après la sauvegarde
       modifyListContainer.remove();
       this.verify = false;
+
+      // Mettre à jour le tableau de tâches avec les tâches mises à jour
+      this.tasks = updatedTasks;
+
+      // Mettre à jour le titre de la liste dans l'UI
+      const listTitleElement = document.querySelector(`#${this.listId}-content h2`);
+      listTitleElement.textContent = titleInput.value;  // Mettre à jour le titre de la liste affiché dans l'UI
     };
 
     const taskList = document.createElement("ul");
     taskList.classList.add("modify-task-list");
+
+    // Vider la liste des tâches avant de la remplir avec les tâches modifiées
+    taskList.innerHTML = "";
 
     this.tasks.forEach((task) => {
       const taskElement = document.createElement("li");

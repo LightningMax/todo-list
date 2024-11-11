@@ -88,7 +88,22 @@ class TodoList {
 
     this.tasks.tasks.forEach((task) => {
       const taskElement = document.createElement("li");
-      taskElement.textContent = `${task.title} - ${task.date}`;
+      taskElement.classList.add("task");
+
+      const taskCheckbox = document.createElement("input");
+      taskCheckbox.type = "checkbox";
+      taskCheckbox.checked = task.completed || false;
+      taskCheckbox.onchange = () => {
+        task.completed = taskCheckbox.checked;
+        this.tasks.updateTask(task);
+      };
+
+      const taskTitle = document.createElement("span");
+      taskTitle.textContent = `${task.title} - ${task.date}`;
+
+      taskElement.appendChild(taskCheckbox);
+      taskElement.appendChild(taskTitle);
+
       taskList.appendChild(taskElement);
     });
   }
