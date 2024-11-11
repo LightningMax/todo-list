@@ -1,4 +1,4 @@
-import { TodoList } from "./todo-list.js";
+import { todoLists, TodoList } from "./todo-list.js";
 import { ModifyTask } from "./modify-task.js";
 
 export class Lists {
@@ -54,13 +54,11 @@ export class Lists {
   }
 
   modifyList(listId, title, tasks) {
-    // Logique pour modifier la liste
     const list = this.lists.find((list) => list.id === listId);
     if (list) {
       list.title = title;
       list.body.querySelector("button").textContent = title;
 
-      // Mettre à jour les tâches
       const todoList = this.todoLists.todoLists.find(
         (todoList) => todoList.listId === listId
       );
@@ -101,8 +99,8 @@ class List {
     deleteBtn.textContent = "delete";
     deleteBtn.onclick = () => {
       const todoContent = document.getElementById(`${this.id}-content`);
-      todoContent.remove()
-      this.deleteList()
+      todoContent.remove();
+      this.deleteList();
     };
 
     li.appendChild(btn);
@@ -113,6 +111,9 @@ class List {
   }
 
   deleteList() {
-    this.body.remove()
+    this.body.remove();
   }
 }
+
+const lists = new Lists(todoLists);
+export default lists;
