@@ -1,11 +1,11 @@
-/* Réinitialisation de base */
+/* Reset styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Style général du body */
+/* General body style */
 body {
     font-family: Arial, sans-serif;
     background-color: #333;
@@ -15,10 +15,10 @@ body {
     padding: 20px;
 }
 
-/* Sidebar collée à gauche et sans arrondis */
+/* Sidebar on the left */
 #sidebar {
     width: 250px;
-    background-color: #333;
+    background-color: #282727;
     color: #fff;
     padding: 20px;
     height: 100vh;
@@ -31,7 +31,7 @@ body {
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Modal Styles */
+/* Modal styles */
 #list-modal {
     flex-direction: column;
     align-items: center;
@@ -76,7 +76,7 @@ body {
     background-color: #45a049;
 }
 
-/* Bouton pour ajouter une liste */
+/* Button for adding a list */
 #add-list-button {
     width: 100%;
     padding: 10px;
@@ -94,7 +94,7 @@ body {
     overflow-y: auto;
 }
 
-/* Boutons pour chaque liste dans la sidebar */
+/* Buttons for each list in the sidebar */
 .list-button {
     width: 100%;
     padding: 10px;
@@ -105,50 +105,55 @@ body {
     cursor: pointer;
 }
 
-/* Conteneur pour les tâches */
+/* Task container */
 .todo-container {
     flex: 1;
-    background-color: #fff;
+    background-color: #282727;
     padding: 20px;
     margin-left: 250px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-    justify-content: space-between; /* Permet de placer le fieldset en bas */
+    justify-content: flex-start;
+    gap: 20px;
+    position: relative;
 }
 
-/* Titre de la liste sélectionnée */
+/* Selected list title */
 .todo-container h2 {
     margin-bottom: 20px;
+    color: #ffffff; /* Change to white for better contrast */
+    font-size: 1.6rem;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 5px;
 }
 
-/* Champs de saisie pour les tâches */
+/* Input fields for tasks */
 .task-inputs {
-    display: flex; /* Align items in a row */
-    align-items: center; /* Center items vertically */
-    gap: 10px; /* Space between inputs */
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 15px;
 }
 
-/* Réduire la largeur de la tâche */
 .task-name {
-    min-width: 100px; /* Minimum width for task name */
-    width: 150px; /* Set a specific width */
+    min-width: 100px;
+    width: 150px;
     padding: 8px;
     font-size: 0.9rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    height: 36px; /* Align with the height of the task date */
+    height: 36px;
 }
 
 .task-date {
-    width: 90px; /* Set width for date input */
+    width: 90px;
     padding: 8px;
     font-size: 0.9rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    height: 36px; /* Align with task name */
+    height: 36px;
 }
 
 .add-task-button {
@@ -161,7 +166,7 @@ body {
     cursor: pointer;
 }
 
-/* Liste des tâches */
+/* Task list */
 .task-list,
 .finished-tasks {
     list-style-type: none;
@@ -169,7 +174,7 @@ body {
     margin-top: 10px;
 }
 
-/* Style de chaque tâche */
+/* Individual task */
 .task {
     display: flex;
     align-items: center;
@@ -182,17 +187,43 @@ body {
     gap: 10px;
 }
 
-/* Case à cocher alignée avec le texte */
-.task .task-checkbox {
-    margin-right: 8px;
+/* Custom checkbox style with animation */
+.task input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #eee;
+    margin: 0;
+    font: inherit;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #4CAF50;
+    border-radius: 4px;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.task .info-task {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.task input[type="checkbox"]::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+    background-color: #4CAF50;
+    border-radius: 2px;
 }
 
+.task input[type="checkbox"]:checked {
+    border-color: #4CAF50;
+    background-color: #4CAF50;
+}
+
+.task input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+/* Task name and date */
 .task .task-name {
     font-weight: bold;
     color: #333;
@@ -203,23 +234,24 @@ body {
     color: #888;
 }
 
-/* Style pour le texte barré si la tâche est terminée */
+/* Completed task style */
 .task.completed .task-name {
     text-decoration: line-through;
     color: #888;
 }
 
-/* Styles pour le fieldset des tâches terminées */
+/* Finished tasks fieldset */
 fieldset {
-    margin-top: auto; /* Le fieldset se place en bas */
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
-    overflow-y: auto; /* Permet de défiler si nécessaire */
-    max-height: 200px; /* Limite la hauteur */
+    overflow-y: auto;
+    max-height: 200px;
+    flex-grow: 1;
+    margin-top: auto;
 }
 
-/* Media Queries pour petits écrans */
+/* Media queries for smaller screens */
 @media (max-width: 600px) {
     #sidebar {
         position: static;

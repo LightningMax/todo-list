@@ -1,12 +1,6 @@
 import { Lists } from "./components/menu-list.js";
 import { TodoLists } from "./components/todo-list.js";
-import {
-  loadData,
-  saveData,
-  exportData,
-  importData,
-  createButtons,
-} from "./components/storage.js";
+import { exportDataAsCSV, importDataFromCSV, createButtons } from "./components/storage.js";
 
 class App {
   constructor() {
@@ -16,9 +10,7 @@ class App {
 
   initialize() {
     this.lists.initialize();
-    loadData();
     createButtons();
-    window.addEventListener("beforeunload", saveData);
   }
 }
 
