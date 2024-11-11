@@ -96,7 +96,8 @@ class List {
     btn.onclick = () => this.showTodoList(this.id);
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "delete";
+    deleteBtn.classList.add("delete-list-button")
+    deleteBtn.textContent = "Delete";
     deleteBtn.onclick = () => {
       const todoContent = document.getElementById(`${this.id}-content`);
       todoContent.remove();
