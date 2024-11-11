@@ -6,7 +6,6 @@
 }
 
 :root {
-
 }
 
 * {
@@ -98,15 +97,14 @@ body {
   width: 24px;
   height: 24px;
   padding: 10px;
-  
+
   background-image: url(../assets/icons/plus-circle.svg);
   color: white;
-  
+
   cursor: pointer;
 }
 
 #add-list-button:hover {
-  
   background-image: url(../assets/icons/plus-circle-solid.svg);
 }
 
@@ -205,7 +203,7 @@ body {
   -webkit-appearance: none;
   appearance: none;
   /* background-color: #eee; */
-  background-image: url('../assets/icons/ellipse-outline.svg');
+  background-image: url("../assets/icons/ellipse-outline.svg");
   margin: 0;
   /* font: inherit; */
   width: 18px;
@@ -228,7 +226,7 @@ body {
 }
 
 .task input[type="checkbox"]:checked {
-  background-image: url('../assets/icons/checkmark-circle-outline.svg');
+  background-image: url("../assets/icons/checkmark-circle-outline.svg");
 }
 
 .task input[type="checkbox"]:checked::before {
