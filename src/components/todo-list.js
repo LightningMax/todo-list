@@ -94,5 +94,5 @@ class TodoList {
   }
 }
 
-const todoLists = new TodoLists()
-export {todoLists, TodoList} 
+const todoLists = new TodoLists();
+export { todoLists, TodoList };
