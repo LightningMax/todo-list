@@ -12,32 +12,35 @@ export class Tasks {
     this.listContentId = listContentId;
   }
 
-  addTask() {
-    const taskInputText = document.querySelector(
-      `#${this.listContentId} .task-name`
-    );
-    const taskInputDate = document.querySelector(
-      `#${this.listContentId} .task-date`
-    );
+  addTask(taskName = "", taskDate = "", completed = false, skipValidation = false) {
+    if (!skipValidation && (taskName === "" || taskDate === "")) {
+      const taskInputText = document.querySelector(`#${this.listContentId} .task-name`);
+      const taskInputDate = document.querySelector(`#${this.listContentId} .task-date`);
 
-    if (
-      isFieldValid(taskInputText.value, "You need to fill in the field") &&
-      isFieldValid(taskInputDate.value, "You need to pick a date")
-    ) {
-      const task = new Task(
-        taskInputText.value,
-        taskInputDate.value,
-        this.listContentId
-      );
-      this.tasks.push(task);
+      if (
+        isFieldValid(taskInputText.value, "You need to fill in the field") &&
+        isFieldValid(taskInputDate.value, "You need to pick a date")
+      ) {
+        taskName = taskInputText.value;
+        taskDate = taskInputDate.value;
 
-      const taskList = document.querySelector(
-        `#${this.listContentId} .task-list`
-      );
-      taskList.appendChild(task.element);
+        taskInputText.value = "";
+        taskInputDate.value = "";
+      } else {
+        return;
+      }
+    }
 
-      taskInputText.value = "";
-      taskInputDate.value = "";
+    const task = new Task(taskName, taskDate, this.listContentId);
+    this.tasks.push(task);
+
+    const taskList = document.querySelector(`#${this.listContentId} .task-list`);
+    taskList.appendChild(task.element);
+
+    if (completed) {
+      const checkBox = task.element.querySelector("input[type='checkbox']");
+      checkBox.checked = true;
+      task.toggleTaskStatus(task.element, task.element.querySelector(".delete-task"), checkBox, this.listContentId);
     }
   }
 }
@@ -51,9 +54,7 @@ class Task {
   }
 
   createTaskElement() {
-    const countTask = document.querySelectorAll(
-      `#${this.listContentId} .task`
-    ).length;
+    const countTask = document.querySelectorAll(`#${this.listContentId} .task`).length;
     const li = document.createElement("li");
     li.className = "task";
     li.id = `task-${countTask + 1}`;
@@ -64,6 +65,7 @@ class Task {
     const infoText = document.createElement("span");
     infoText.id = `text-task-${countTask + 1}`;
     infoText.textContent = this.title;
+
     const infoDate = document.createElement("span");
     infoDate.id = `date-task-${countTask + 1}`;
     infoDate.textContent = this.date.split("-").reverse().join("/");
@@ -73,10 +75,7 @@ class Task {
     deleteButton.textContent = "Delete";
     deleteButton.style.display = "none";
     deleteButton.onclick = () =>
-      this.deleteChild(
-        document.querySelector(`#${this.listContentId} .finished-tasks`),
-        li
-      );
+      this.deleteChild(document.querySelector(`#${this.listContentId} .finished-tasks`), li);
 
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
@@ -93,9 +92,7 @@ class Task {
 
   toggleTaskStatus(li, deleteButton, checkBox, listContentId) {
     const taskList = document.querySelector(`#${listContentId} .task-list`);
-    const finishList = document.querySelector(
-      `#${listContentId} .finished-tasks`
-    );
+    const finishList = document.querySelector(`#${listContentId} .finished-tasks`);
 
     if (checkBox.checked) {
       deleteButton.style.display = "inline";
