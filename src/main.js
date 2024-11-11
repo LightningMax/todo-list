@@ -1,11 +1,9 @@
-import { Lists } from "./components/menu-list.js";
-import { TodoLists } from "./components/todo-list.js";
-import { exportDataAsCSV, importDataFromCSV, createButtons } from "./components/storage.js";
+import lists from "./components/menu-list.js";
+import createButtons from "./components/storage.js";
 
 class App {
   constructor() {
-    this.todoLists = new TodoLists();
-    this.lists = new Lists(this.todoLists);
+    this.lists = lists;
   }
 
   initialize() {

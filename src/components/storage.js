@@ -1,8 +1,12 @@
-import { TodoLists, TodoList } from "./todo-list.js";
-import { Lists } from "./menu-list.js";
+import { Tasks } from "./task.js";
+import { todoLists, TodoList } from "./todo-list.js";
+import  lists  from "./menu-list.js";
 
 const exportDataAsCSV = () => {
-  const rows = [["List ID", "List Title", "Task Name", "Task Date", "Completed"]];
+  // Prepare CSV rows with headers
+  const rows = [
+    ["List ID", "List Title", "Task Name", "Task Date", "Completed"],
+  ];
 
   document.querySelectorAll(".list").forEach((listElement) => {
     const listId = listElement.id;
@@ -19,7 +23,8 @@ const exportDataAsCSV = () => {
     });
   });
 
-  const csvContent = rows.map(e => e.join(",")).join("\n");
+  // Convert data to CSV format
+  const csvContent = rows.map((e) => e.join(",")).join("\n");
   const blob = new Blob([csvContent], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
 
@@ -36,27 +41,39 @@ const importDataFromCSV = (file) => {
 
   reader.onload = (event) => {
     const csvData = event.target.result;
-    const rows = csvData.split("\n").map(row => row.split(","));
+    const rows = csvData.split("\n").map((row) => row.split(","));
 
-    document.querySelectorAll(".list").forEach(listElement => listElement.remove());
-    document.querySelectorAll(".todo-container").forEach(container => container.remove());
+    // Clear existing lists and tasks from the UI
+    document
+      .querySelectorAll(".list")
+      .forEach((listElement) => listElement.remove());
+    document
+      .querySelectorAll(".todo-container")
+      .forEach((container) => container.remove());
 
-    const todoListsInstance = new TodoLists();
-    const listsInstance = new Lists(todoListsInstance);
+    // Initialize class instances for managing lists and tasks
 
-    rows.slice(1).forEach(([listId, listTitle, taskName, taskDate, completed]) => {
-      let currentList = listsInstance.lists.find(list => list.id === listId);
+    // Process each row from the CSV, skipping the header
+    rows
+      .slice(1)
+      .forEach(([listId, listTitle, taskName, taskDate, completed]) => {
+        // Check if the list already exists
+        let currentList = lists.lists.find((list) => list.id === listId);
 
-      if (!currentList) {
-        listsInstance.createList(listTitle);
-        currentList = listsInstance.lists.find(list => list.title === listTitle);
-      }
+        // Create the list if it doesn't already exist
+        if (!currentList) {
+          lists.createList(listTitle);
+          currentList = lists.lists.find((list) => list.title === listTitle);
+        }
 
-      const todoList = todoListsInstance.todoLists.find(todo => todo.listId === currentList.id);
-      if (todoList) {
-        todoList.tasks.addTask(taskName, taskDate, completed === "Yes", true);
-      }
-    });
+        // Retrieve or create the task instance for the current list
+        const todoList = todoLists.todoLists.find(
+          (todo) => todo.listId === currentList.id
+        );
+        if (todoList) {
+          todoList.tasks.addTask(taskName, taskDate, completed === "Yes", true); // Pass true to skip validation
+        }
+      });
   };
 
   reader.readAsText(file);
@@ -87,4 +104,4 @@ const createButtons = () => {
   sidebar.appendChild(fileInput);
 };
 
-export { exportDataAsCSV, importDataFromCSV, createButtons };
+export default createButtons;
