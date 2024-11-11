@@ -4,20 +4,20 @@ export class TodoLists {
   constructor() {
     this.todoLists = [];
   }
-  
-  addTodoList(list){
+
+  addTodoList(list) {
     this.todoLists.push(list);
   }
 
   hideAllTodoLists() {
     this.todoLists.forEach((todo) => {
-        todo.hide();
-    })
+      todo.hide();
+    });
   }
 
   showCurrentList(listId) {
     this.hideAllTodoLists();
-    const currentList = this.todoLists.find(todo => todo.listId === listId);
+    const currentList = this.todoLists.find((todo) => todo.listId === listId);
     if (currentList) currentList.show();
   }
 }
@@ -67,18 +67,29 @@ export class TodoList {
     fieldset.append(legend, finishedTasks);
     document.body.appendChild(div);
 
-    return div
+    return div;
   }
 
   hide() {
     if (this.element) {
-        this.element.style.display = "none";
+      this.element.style.display = "none";
     }
   }
-  
+
   show() {
     if (this.element) {
-        this.element.style.display = "block";
+      this.element.style.display = "block";
     }
+  }
+
+  updateTaskList() {
+    const taskList = this.element.querySelector(".task-list");
+    taskList.innerHTML = "";
+
+    this.tasks.tasks.forEach((task) => {
+      const taskElement = document.createElement("li");
+      taskElement.textContent = `${task.title} - ${task.date}`;
+      taskList.appendChild(taskElement);
+    });
   }
 }
