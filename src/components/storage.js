@@ -1,10 +1,12 @@
 import { Tasks } from "./task.js";
-import { TodoLists, TodoList } from "./todo-list.js";
-import { Lists } from "./menu-list.js";
+import { todoLists, TodoList } from "./todo-list.js";
+import  lists  from "./menu-list.js";
 
 const exportDataAsCSV = () => {
   // Prepare CSV rows with headers
-  const rows = [["List ID", "List Title", "Task Name", "Task Date", "Completed"]];
+  const rows = [
+    ["List ID", "List Title", "Task Name", "Task Date", "Completed"],
+  ];
 
   // Loop through each list and collect data
   document.querySelectorAll(".list").forEach((listElement) => {
@@ -15,15 +17,18 @@ const exportDataAsCSV = () => {
     // Loop through each task and extract relevant data
     taskElements.forEach((taskElement) => {
       const taskName = taskElement.querySelector(".info-task span").textContent;
-      const taskDate = taskElement.querySelector(".task-date")?.textContent || "";
-      const isCompleted = taskElement.classList.contains("completed") ? "Yes" : "No";
+      const taskDate =
+        taskElement.querySelector(".task-date")?.textContent || "";
+      const isCompleted = taskElement.classList.contains("completed")
+        ? "Yes"
+        : "No";
 
       rows.push([listId, listTitle, taskName, taskDate, isCompleted]);
     });
   });
 
   // Convert data to CSV format
-  const csvContent = rows.map(e => e.join(",")).join("\n");
+  const csvContent = rows.map((e) => e.join(",")).join("\n");
   const blob = new Blob([csvContent], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
 
@@ -42,33 +47,39 @@ const importDataFromCSV = (file) => {
 
   reader.onload = (event) => {
     const csvData = event.target.result;
-    const rows = csvData.split("\n").map(row => row.split(","));
+    const rows = csvData.split("\n").map((row) => row.split(","));
 
     // Clear existing lists and tasks from the UI
-    document.querySelectorAll(".list").forEach(listElement => listElement.remove());
-    document.querySelectorAll(".todo-container").forEach(container => container.remove());
+    document
+      .querySelectorAll(".list")
+      .forEach((listElement) => listElement.remove());
+    document
+      .querySelectorAll(".todo-container")
+      .forEach((container) => container.remove());
 
     // Initialize class instances for managing lists and tasks
-    const todoListsInstance = new TodoLists();
-    const listsInstance = new Lists(todoListsInstance);
 
     // Process each row from the CSV, skipping the header
-    rows.slice(1).forEach(([listId, listTitle, taskName, taskDate, completed]) => {
-      // Check if the list already exists
-      let currentList = listsInstance.lists.find(list => list.id === listId);
+    rows
+      .slice(1)
+      .forEach(([listId, listTitle, taskName, taskDate, completed]) => {
+        // Check if the list already exists
+        let currentList = lists.lists.find((list) => list.id === listId);
 
-      // Create the list if it doesn't already exist
-      if (!currentList) {
-        listsInstance.createList(listTitle);
-        currentList = listsInstance.lists.find(list => list.title === listTitle);
-      }
+        // Create the list if it doesn't already exist
+        if (!currentList) {
+          lists.createList(listTitle);
+          currentList = lists.lists.find((list) => list.title === listTitle);
+        }
 
-      // Retrieve or create the task instance for the current list
-      const todoList = todoListsInstance.todoLists.find(todo => todo.listId === currentList.id);
-      if (todoList) {
-        todoList.tasks.addTask(taskName, taskDate, completed === "Yes", true); // Pass true to skip validation
-      }
-    });
+        // Retrieve or create the task instance for the current list
+        const todoList = todoLists.todoLists.find(
+          (todo) => todo.listId === currentList.id
+        );
+        if (todoList) {
+          todoList.tasks.addTask(taskName, taskDate, completed === "Yes", true); // Pass true to skip validation
+        }
+      });
   };
 
   reader.readAsText(file);
@@ -102,4 +113,4 @@ const createButtons = () => {
   sidebar.appendChild(fileInput);
 };
 
-export { exportDataAsCSV, importDataFromCSV, createButtons };
+export default createButtons;

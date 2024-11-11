@@ -1,6 +1,6 @@
 import { Tasks } from "./task.js";
 
-export class TodoLists {
+class TodoLists {
   constructor() {
     this.todoLists = [];
   }
@@ -22,7 +22,7 @@ export class TodoLists {
   }
 }
 
-export class TodoList {
+class TodoList {
   constructor(listId, title) {
     this.listId = listId;
     this.id = `${this.listId}-content`;
@@ -93,3 +93,6 @@ export class TodoList {
     });
   }
 }
+
+const todoLists = new TodoLists()
+export {todoLists, TodoList} 
