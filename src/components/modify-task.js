@@ -11,7 +11,6 @@ export class ModifyTask {
   createModifyButton() {
     const button = document.createElement("button");
     button.textContent = "Modify";
-    console.log(this.verify, "start");
     button.onclick = () => {
       if (this.verify === false) {
         this.showModifyList();
@@ -31,10 +30,8 @@ export class ModifyTask {
     const closeButton = document.createElement("button");
     closeButton.textContent = "Close";
     closeButton.onclick = () => {
-      console.log(this.verify, "delete1");
       modifyListContainer.remove();
       this.verify = false;
-      console.log(this.verify, "delete2");
     };
 
     const titleInput = document.createElement("input");
@@ -44,7 +41,6 @@ export class ModifyTask {
     const saveButton = document.createElement("button");
     saveButton.textContent = "Save";
     saveButton.onclick = () => {
-      console.log(this.verify, "save1");
       const updatedTasks = [];
       const taskElements = document.querySelectorAll(".modify-task-list li");
       taskElements.forEach((taskElement) => {
@@ -60,7 +56,6 @@ export class ModifyTask {
       this.modifyCallback(this.listId, titleInput.value, updatedTasks);
       modifyListContainer.remove();
       this.verify = false;
-      console.log(this.verify, "save2");
     };
 
     const taskList = document.createElement("ul");
