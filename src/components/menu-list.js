@@ -1,5 +1,6 @@
 import { todoLists, TodoList } from "./todo-list.js";
 import { ModifyTask } from "./modify-task.js";
+import { Tasks } from "./task.js"; // Import the Tasks class
 
 export class Lists {
   constructor(todoLists) {
@@ -26,12 +27,12 @@ export class Lists {
     this.showTodoList(listId);
     this.todoLists.addTodoList(todoList);
 
-    // Ajouter le bouton "Modify"
+    const tasksInstance = todoList.tasks; // Get the Tasks instance from todoList
     const modifyButton = new ModifyTask(
       listId,
       title,
-      todoList.tasks.tasks,
-      this.modifyList.bind(this)
+      tasksInstance.tasks, // Pass tasks array directly
+      tasksInstance // Pass the Tasks instance itself for addTask
     );
     list.body.appendChild(modifyButton.element);
   }
@@ -51,26 +52,6 @@ export class Lists {
   showModal() {
     const listModal = document.getElementById("list-modal");
     listModal.showModal();
-  }
-
-  modifyList(listId, title, tasks) {
-    const list = this.lists.find((list) => list.id === listId);
-    if (list) {
-      list.title = title;
-      list.body.querySelector("button").textContent = title;
-
-      const todoList = this.todoLists.todoLists.find(
-        (todoList) => todoList.listId === listId
-      );
-      if (todoList) {
-        todoList.tasks.tasks = tasks.map((task) => ({
-          title: task.title,
-          date: task.date,
-          completed: task.completed,
-        }));
-        todoList.updateTaskList();
-      }
-    }
   }
 }
 
@@ -97,7 +78,8 @@ class List {
     btn.onclick = () => this.showTodoList(this.id);
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "delete";
+    deleteBtn.classList.add("delete-list-button")
+    deleteBtn.textContent = "Delete";
     deleteBtn.onclick = () => {
       const todoContent = document.getElementById(`${this.id}-content`);
       todoContent.remove();
