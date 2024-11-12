@@ -112,14 +112,26 @@ body {
 
 /* Buttons for each list in the sidebar */
 .list-button {
-  width: 100%;
+  width: 74%;
+  border: none;
+  border-bottom: 2px solid #ddd; /* Light gray bottom border */
   padding: 10px;
   margin-bottom: 5px;
   text-align: left;
-  background-color: #444;
-  color: #fff;
+  background-color: #ffffff;
+  color: #000000;
   cursor: pointer;
 }
+
+.list-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Transparent black on hover */
+}
+
+
+.list-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Transparent black on hover */
+}
+
 
 .todo-container {
   flex: 1;
@@ -347,7 +359,7 @@ fieldset {
   height: 100vh;
   width: 400px;
   padding: 20px;
-  background-color: #282727;
+  background-color: #ffffff;
   color: #fff;
   display: flex;
   flex-direction: column;
