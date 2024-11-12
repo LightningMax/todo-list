@@ -87,7 +87,10 @@ body {
   background-color: #45a049;
 }
 
-/* Button for adding a list */
+.task-handler input{
+  padding-left: 10px;
+}
+
 #add-list-button {
   background: none;
   border: none;
@@ -99,7 +102,7 @@ body {
   background-image: url("../assets/icons/plus-circle.svg");
 }
 
-#add-list-button:hover {  
+#add-list-button:hover {
   background-image: url("../assets/icons/plus-circle-solid.svg");
 }
 
@@ -126,11 +129,9 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-
 .list-button:hover {
-  background-color: rgba(0, 0, 0, 0.1); 
+  background-color: rgba(0, 0, 0, 0.1);
 }
-
 
 .todo-container {
   flex: 1;
@@ -179,14 +180,12 @@ body {
   height: 36px;
 }
 
-
 .task-list,
 .finished-tasks {
   list-style-type: none;
   padding: 0;
   margin-top: 10px;
 }
-
 
 .task {
   display: flex;
@@ -200,15 +199,14 @@ body {
   gap: 10px;
 }
 
-.task span{
+.task span {
   padding-left: 10px;
 }
-
 
 .task input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
-  background-image: url('../assets/icons/ellipse-outline.svg');
+  background-image: url("../assets/icons/ellipse-outline.svg");
   margin: 0;
   width: 18px;
   height: 18px;
@@ -333,7 +331,6 @@ fieldset {
   background-image: url("../assets/icons/trash.svg");
   cursor: pointer;
 }
-
 
 @media (max-width: 600px) {
   #sidebar {
