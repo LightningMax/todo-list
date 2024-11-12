@@ -101,7 +101,6 @@ class Task {
 
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("delete-task");
-    deleteButton.textContent = "Delete";
     deleteButton.style.display = "none";
     deleteButton.onclick = () =>
       this.deleteChild(
