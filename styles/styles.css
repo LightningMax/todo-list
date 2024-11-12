@@ -121,7 +121,6 @@ body {
   cursor: pointer;
 }
 
-/* Task container */
 .todo-container {
   flex: 1;
   background-color: var(--primary-background-color);
@@ -192,6 +191,10 @@ body {
   gap: 10px;
 }
 
+.task span{
+  padding-left: 10px;
+}
+
 /* Custom checkbox style with animation */
 .task input[type="checkbox"] {
   -webkit-appearance: none;
@@ -237,6 +240,11 @@ body {
 .task.completed .task-name {
   text-decoration: line-through;
   color: #888;
+}
+
+.task-handler button {
+  margin-left: 10px;
+  margin-top: 15px;
 }
 
 fieldset {
@@ -304,6 +312,16 @@ fieldset {
   height: 24px;
   padding: 10px;
   background-image: url("../assets/icons/plus-circle.svg");
+  cursor: pointer;
+}
+
+.delete-task {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/trash.svg");
   cursor: pointer;
 }
 
