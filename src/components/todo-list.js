@@ -50,8 +50,11 @@ class TodoList {
 
     const btnAddTask = document.createElement("button");
     btnAddTask.classList.add("add-task-button");
-    btnAddTask.textContent = "Add Task";
     btnAddTask.onclick = () => this.tasks.addTask();
+
+    const div2 = document.createElement("div");
+    div2.classList.add("task-handler")
+    div2.append(inputText, inputDate, btnAddTask)
 
     const listTask = document.createElement("ul");
     listTask.classList.add("task-list");
@@ -63,7 +66,7 @@ class TodoList {
     const finishedTasks = document.createElement("ul");
     finishedTasks.classList.add("finished-tasks");
 
-    div.append(titleList, inputText, inputDate, btnAddTask, listTask, fieldset);
+    div.append(titleList, div2, listTask, fieldset);
     fieldset.append(legend, finishedTasks);
     document.body.appendChild(div);
 
