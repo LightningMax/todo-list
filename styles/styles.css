@@ -95,14 +95,13 @@ body {
   height: 24px;
   padding: 10px;
   color: #282727;
-  
   cursor: pointer;
+  background-image: url("../assets/icons/plus-circle.svg");
 }
 
-/* #add-list-button:hover {
-  
-  background-image: url(../assets/icons/plus-circle-solid.svg);
-} */
+#add-list-button:hover {  
+  background-image: url("../assets/icons/plus-circle-solid.svg");
+}
 
 #menu-list {
   list-style-type: none;
@@ -245,7 +244,7 @@ body {
 
 /* Finished tasks fieldset */
 fieldset {
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 8px;
   padding: 10px;
   overflow-y: auto;
@@ -261,6 +260,7 @@ fieldset {
   height: 24px;
   padding: 10px;
   background-image: url("../assets/icons/trash.svg");
+  cursor: pointer;
 }
 
 .modify-task-button {
@@ -270,8 +270,36 @@ fieldset {
   height: 24px;
   padding: 10px;
   background-image: url("../assets/icons/edit-pencil.svg");
+  cursor: pointer;
 }
 
+#download-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/download-square.svg");
+  cursor: pointer;
+}
+
+#download-button:hover {
+  background-image: url("../assets/icons/download-square-solid.svg");
+}
+
+#import-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/upload-square.svg");
+  cursor: pointer;
+}
+
+#import-button:hover {
+  background-image: url("../assets/icons/upload-square-solid.svg");
+}
 
 /* Media queries for smaller screens */
 @media (max-width: 600px) {
