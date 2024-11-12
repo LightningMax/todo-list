@@ -1,6 +1,6 @@
 import { todoLists, TodoList } from "./todo-list.js";
 import { ModifyTask } from "./modify-task.js";
-import { Tasks } from "./task.js"; // Import the Tasks class
+import { Tasks } from "./task.js";
 
 export class Lists {
   constructor(todoLists) {
@@ -27,12 +27,12 @@ export class Lists {
     this.showTodoList(listId);
     this.todoLists.addTodoList(todoList);
 
-    const tasksInstance = todoList.tasks; // Get the Tasks instance from todoList
+    const tasksInstance = todoList.tasks;
     const modifyButton = new ModifyTask(
       listId,
       title,
-      tasksInstance.tasks, // Pass tasks array directly
-      tasksInstance // Pass the Tasks instance itself for addTask
+      tasksInstance.tasks,
+      tasksInstance
     );
     list.body.appendChild(modifyButton.element);
   }

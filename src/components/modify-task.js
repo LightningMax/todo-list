@@ -33,29 +33,24 @@ export class ModifyTask {
       this.verify = false;
     };
 
-    // Input pour le titre de la liste (initialisé avec le titre actuel)
     const titleInput = document.createElement("input");
     titleInput.type = "text";
-    titleInput.value = this.title;  // Le titre actuel de la liste
+    titleInput.value = this.title;
 
     const saveButton = document.createElement("button");
     saveButton.textContent = "Save Changes";
     saveButton.onclick = () => {
       const taskListElement = document.querySelector(`#${this.listId}-content .task-list`);
 
-      // Effacer les tâches existantes dans l'UI
       taskListElement.innerHTML = "";
 
-      // Mettre à jour le titre de la liste
       const listTitle = document.querySelector(`#${this.listId} button`);
-      listTitle.textContent = titleInput.value;  // Modifier le texte du bouton (titre de la liste)
+      listTitle.textContent = titleInput.value;
 
-      // Mettre à jour la variable `this.title` avec le nouveau titre
-      this.title = titleInput.value;  // Mise à jour de `this.title`
+      this.title = titleInput.value;
 
-      // Ajouter les tâches modifiées dans la liste
       const taskElements = document.querySelectorAll(".modify-task-item");
-      const updatedTasks = []; // Stocke les tâches mises à jour
+      const updatedTasks = [];
 
       taskElements.forEach((taskElement) => {
         const taskTitleInput = taskElement.querySelector("input[type='text']");
@@ -68,29 +63,23 @@ export class ModifyTask {
           completed: taskCompletedCheckbox.checked,
         };
 
-        // Ajouter la tâche mise à jour dans le tableau
         updatedTasks.push(updatedTask);
 
-        // Ajouter la tâche à l'instance de tâches
         this.tasksInstance.addTask(taskTitleInput.value, taskDateInput.value, taskCompletedCheckbox.checked, true);
       });
 
-      // Supprimer le conteneur de modification après la sauvegarde
       modifyListContainer.remove();
       this.verify = false;
 
-      // Mettre à jour le tableau de tâches avec les tâches mises à jour
       this.tasks = updatedTasks;
 
-      // Mettre à jour le titre de la liste dans l'UI
       const listTitleElement = document.querySelector(`#${this.listId}-content h2`);
-      listTitleElement.textContent = titleInput.value;  // Mettre à jour le titre de la liste affiché dans l'UI
+      listTitleElement.textContent = titleInput.value;
     };
 
     const taskList = document.createElement("ul");
     taskList.classList.add("modify-task-list");
 
-    // Vider la liste des tâches avant de la remplir avec les tâches modifiées
     taskList.innerHTML = "";
 
     this.tasks.forEach((task) => {
