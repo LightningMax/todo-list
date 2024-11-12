@@ -1,5 +1,5 @@
 import lists from "./components/menu-list.js";
-import createButtons from "./components/storage.js";
+import importExport from "./components/storage.js";
 
 class App {
   constructor() {
@@ -8,7 +8,7 @@ class App {
 
   initialize() {
     this.lists.initialize();
-    createButtons();
+    importExport()
   }
 }
 

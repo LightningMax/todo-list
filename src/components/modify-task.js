@@ -10,7 +10,6 @@ export class ModifyTask {
 
   createModifyButton() {
     const button = document.createElement("button");
-    button.textContent = "Modify";
     button.classList.add("modify-task-button");
     button.onclick = () => {
       if (!this.verify) {

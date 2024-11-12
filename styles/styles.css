@@ -5,9 +5,6 @@
   --secondary-background-color: #282727;
 }
 
-:root {
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -97,15 +94,13 @@ body {
   width: 24px;
   height: 24px;
   padding: 10px;
-
-  background-image: url(../assets/icons/plus-circle.svg);
-  color: white;
-
+  color: #282727;
   cursor: pointer;
+  background-image: url("../assets/icons/plus-circle.svg");
 }
 
-#add-list-button:hover {
-  background-image: url(../assets/icons/plus-circle-solid.svg);
+#add-list-button:hover {  
+  background-image: url("../assets/icons/plus-circle-solid.svg");
 }
 
 #menu-list {
@@ -126,7 +121,6 @@ body {
   cursor: pointer;
 }
 
-/* Task container */
 .todo-container {
   flex: 1;
   background-color: var(--primary-background-color);
@@ -144,7 +138,7 @@ body {
 /* Selected list title */
 .todo-container h2 {
   margin-bottom: 20px;
-  color: #ffffff; /* Change to white for better contrast */
+  color: black; /* Change to white for better contrast */
   font-size: 1.6rem;
   border-bottom: 2px solid #4caf50;
   padding-bottom: 5px;
@@ -169,7 +163,6 @@ body {
 }
 
 .task-date {
-  width: 90px;
   padding: 8px;
   font-size: 0.9rem;
   border: 1px solid #ccc;
@@ -198,17 +191,18 @@ body {
   gap: 10px;
 }
 
+.task span{
+  padding-left: 10px;
+}
+
 /* Custom checkbox style with animation */
 .task input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
-  /* background-color: #eee; */
-  background-image: url("../assets/icons/ellipse-outline.svg");
+  background-image: url('../assets/icons/ellipse-outline.svg');
   margin: 0;
-  /* font: inherit; */
   width: 18px;
   height: 18px;
-  /* border: 2px solid #4caf50; */
   border-radius: 4px;
   display: grid;
   place-content: center;
@@ -248,8 +242,13 @@ body {
   color: #888;
 }
 
+.task-handler button {
+  margin-left: 10px;
+  margin-top: 15px;
+}
+
 fieldset {
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 8px;
   padding: 10px;
   overflow-y: auto;
@@ -258,6 +257,75 @@ fieldset {
   margin-top: auto;
 }
 
+.delete-list-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/trash.svg");
+  cursor: pointer;
+}
+
+.modify-task-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/edit-pencil.svg");
+  cursor: pointer;
+}
+
+#download-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/download-square.svg");
+  cursor: pointer;
+}
+
+#download-button:hover {
+  background-image: url("../assets/icons/download-square-solid.svg");
+}
+
+#import-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/upload-square.svg");
+  cursor: pointer;
+}
+
+#import-button:hover {
+  background-image: url("../assets/icons/upload-square-solid.svg");
+}
+
+.add-task-button {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/plus-circle.svg");
+  cursor: pointer;
+}
+
+.delete-task {
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  background-image: url("../assets/icons/trash.svg");
+  cursor: pointer;
+}
+
+/* Media queries for smaller screens */
 @media (max-width: 600px) {
   #sidebar {
     position: static;
