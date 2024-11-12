@@ -87,8 +87,8 @@ body {
   background-color: #45a049;
 }
 
-.task-handler input{
-  padding-left: 10px;
+.task-handler input {
+  margin-left: 10px;
 }
 
 #add-list-button {
@@ -290,12 +290,12 @@ fieldset {
   width: 24px;
   height: 24px;
   padding: 10px;
-  background-image: url("../assets/icons/download-square.svg");
+  background-image: url("../assets/icons/upload-square.svg");
   cursor: pointer;
 }
 
 #download-button:hover {
-  background-image: url("../assets/icons/download-square-solid.svg");
+  background-image: url("../assets/icons/upload-square-solid.svg");
 }
 
 #import-button {
@@ -304,12 +304,13 @@ fieldset {
   width: 24px;
   height: 24px;
   padding: 10px;
-  background-image: url("../assets/icons/upload-square.svg");
+  background-image: url("../assets/icons/download-square.svg");
+  
   cursor: pointer;
 }
 
 #import-button:hover {
-  background-image: url("../assets/icons/upload-square-solid.svg");
+  background-image: url("../assets/icons/download-square-solid.svg");
 }
 
 .add-task-button {
