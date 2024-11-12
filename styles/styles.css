@@ -113,13 +113,25 @@ body {
 /* Buttons for each list in the sidebar */
 .list-button {
   width: 74%;
+  border: none;
+  border-bottom: 2px solid #ddd; /* Light gray bottom border */
   padding: 10px;
   margin-bottom: 5px;
   text-align: left;
-  background-color: #444;
-  color: #fff;
+  background-color: #ffffff;
+  color: #000000;
   cursor: pointer;
 }
+
+.list-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Transparent black on hover */
+}
+
+
+.list-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Transparent black on hover */
+}
+
 
 .todo-container {
   flex: 1;
