@@ -110,11 +110,10 @@ body {
   overflow-y: auto;
 }
 
-/* Buttons for each list in the sidebar */
 .list-button {
   width: 74%;
   border: none;
-  border-bottom: 2px solid #ddd; /* Light gray bottom border */
+  border-bottom: 2px solid #ddd;
   padding: 10px;
   margin-bottom: 5px;
   text-align: left;
@@ -124,12 +123,12 @@ body {
 }
 
 .list-button:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Transparent black on hover */
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 
 .list-button:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Transparent black on hover */
+  background-color: rgba(0, 0, 0, 0.1); 
 }
 
 
@@ -147,16 +146,14 @@ body {
   position: relative;
 }
 
-/* Selected list title */
 .todo-container h2 {
   margin-bottom: 20px;
-  color: black; /* Change to white for better contrast */
+  color: black;
   font-size: 1.6rem;
   border-bottom: 2px solid #4caf50;
   padding-bottom: 5px;
 }
 
-/* Input fields for tasks */
 .task-inputs {
   display: flex;
   align-items: center;
@@ -182,7 +179,7 @@ body {
   height: 36px;
 }
 
-/* Task list */
+
 .task-list,
 .finished-tasks {
   list-style-type: none;
@@ -190,7 +187,7 @@ body {
   margin-top: 10px;
 }
 
-/* Individual task */
+
 .task {
   display: flex;
   align-items: center;
@@ -207,7 +204,7 @@ body {
   padding-left: 10px;
 }
 
-/* Custom checkbox style with animation */
+
 .task input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
@@ -337,7 +334,7 @@ fieldset {
   cursor: pointer;
 }
 
-/* Media queries for smaller screens */
+
 @media (max-width: 600px) {
   #sidebar {
     position: static;
